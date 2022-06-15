@@ -1,4 +1,4 @@
-* xref:01-setup.adoc[1. Setup]
+* xref:00-welcome.adoc[0. Welcome]
 ** xref:01-setup.adoc#prerequisite[Prerequisites]
 ** xref:01-setup.adoc#minikube[Setup Minikube]
 

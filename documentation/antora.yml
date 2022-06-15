@@ -1,5 +1,5 @@
-name: template-tutorial
-title: Template Tutorial
+name: workshops-rhel9
+title: RHEL 9 Workshops
 version: master
 nav:
   - modules/ROOT/nav.adoc

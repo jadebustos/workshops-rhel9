@@ -1,4 +1,4 @@
-= Setup
+= Welcome to RHEL9 Workshops
 include::_attributes.adoc[]
 
 [#prerequisite]
