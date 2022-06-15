@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://redhat-scholars.github.io/course-template/workshops-rhel9/00-welcome.html</loc>
-<lastmod>2022-06-15T11:55:30.173Z</lastmod>
+<loc>https://redhat-scholars.github.io/course-template/workshops-rhel9/01-containers-rpms.html</loc>
+<lastmod>2022-06-15T15:14:40.992Z</lastmod>
+</url>
+<url>
+<loc>https://redhat-scholars.github.io/course-template/workshops-rhel9/01-containers.html</loc>
+<lastmod>2022-06-15T15:14:40.992Z</lastmod>
 </url>
 <url>
 <loc>https://redhat-scholars.github.io/course-template/workshops-rhel9/index.html</loc>
-<lastmod>2022-06-15T11:55:30.173Z</lastmod>
+<lastmod>2022-06-15T15:14:40.992Z</lastmod>
 </url>
 </urlset>
