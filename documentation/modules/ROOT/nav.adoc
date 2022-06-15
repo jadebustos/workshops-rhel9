@@ -1,2 +1,2 @@
-* xref:00-welcome.adoc[0. Welcome]
-** xref:00-welcome.adoc#introduction[Introduction]
+* xref:01-containers.adoc[1. Introduction]
+** xref:01-containers-rpms.adoc[1.1 Installing container tools]
