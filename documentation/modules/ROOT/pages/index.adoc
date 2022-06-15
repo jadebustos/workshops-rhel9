@@ -1,4 +1,4 @@
-= Welcome to Template Tutorial
+= Welcome to RHEL 9 Workshops
 :page-layout: home
 :!sectids:
 
@@ -11,10 +11,5 @@ A Kubernetes tutorial to show how you can deploy a Java service to a Kubernetes 
 == Browse modules
 
 [.tile]
-.xref:01-setup.adoc[Get Started]
-* xref:01-setup.adoc#minikube[Minikube]
-
-[.tile]
-.xref:02-deploy.adoc[Deploying]
-* xref:02-deploy.adoc#package[Package the Application]
-* xref:02-deploy.adoc#deploy[Deploy the Application]
+.xref:00-welcome.adoc[Welcome to RHEL 9 Workshops]
+* xref:00-welcome.adoc#introduction[Introduction]

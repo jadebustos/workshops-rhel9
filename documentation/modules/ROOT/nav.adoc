@@ -1,6 +1,5 @@
 * xref:00-welcome.adoc[0. Welcome]
-** xref:01-setup.adoc#prerequisite[Prerequisites]
-** xref:01-setup.adoc#minikube[Setup Minikube]
+** xref:00-welcome.adoc#introduction[Introduction]
 
 * xref:02-deploy.adoc[2. Deploy Service]
 ** xref:02-deploy.adoc#package[Build Service]

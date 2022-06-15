@@ -1,29 +1,25 @@
 = Welcome to RHEL9 Workshops
 include::_attributes.adoc[]
 
-[#prerequisite]
-== Prerequisite CLI tools
+[#introduction]
+== Introduction
 
-include::https://raw.githubusercontent.com/redhat-developer-demos/rhd-tutorial-common/master/prerequisites-kubernetes.adoc[]
-|===
+This project aims to be a recollection of workshops about RHEL 9, both "normal" and Edge. As you know RHEL 9 has two flavors:
 
-include::https://raw.githubusercontent.com/redhat-developer-demos/rhd-tutorial-common/master/optional-requisites.adoc[]
-|===
+1. RHEL 9
+2. RHEL 9 (Edge)
 
-[#minikube]
-== Setup Kubernetes
+[#introrhel9]
+=== RHEL 9
 
-:profile: my_profile
+This is the RHEL version we all know available for serveral hardware architectures:
 
-include::https://raw.githubusercontent.com/redhat-developer-demos/rhd-tutorial-common/master/kubernetes-setup.adoc[]
+1. x86_64
+2. ARM
+3. IBM Power
+4. IBM zSeries
 
-And then you are ready for start using Kubernetes:
+[#introrhel9edge]
+=== RHEL 9 (Edge)
 
-image::kubelogo.png[]
-
-[#downloadtutorial]
-== Get tutorial sources
-
-:tutorial-url: https://github.com/redhat-developer-demos/rhd-tutorial-common.git
-:folder: my_folder
-include::https://raw.githubusercontent.com/redhat-developer-demos/rhd-tutorial-common/master/download-sources.adoc[]
+This is a new version designed for Edge computing cases which is based in an inmutable Operating System using rpm-ostree.
