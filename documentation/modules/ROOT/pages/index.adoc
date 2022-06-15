@@ -3,13 +3,30 @@
 :!sectids:
 
 [.text-center.strong]
-== Publish Services to Kubernetes
+== Introduction
 
-A Kubernetes tutorial to show how you can deploy a Java service to a Kubernetes cluster as it was a child game.
+This project aims to be a recollection of workshops about RHEL 9, both "normal" and Edge. As you know RHEL 9 has two flavors:
+
+1. RHEL 9
+2. RHEL 9 (Edge)
+
+=== RHEL 9
+
+This is the RHEL version we all know available for several hardware architectures:
+
+1. x86_64
+2. ARM
+3. IBM Power
+4. IBM zSeries
+
+=== RHEL 9 (Edge)
+
+This is a new version designed for Edge computing cases which is based in an inmutable Operating System using rpm-ostree..
 
 [.tiles.browse]
 == Browse modules
 
 [.tile]
-.xref:00-welcome.adoc[Welcome to RHEL 9 Workshops]
-* xref:00-welcome.adoc#introduction[Introduction]
+.xref:01-containers.adoc[Deploying containers in RHEL]
+* xref:01-containers.adoc#introduction[Introduction]
+** xref:01-containers-rpms.adoc#containerrpms[Installing container tools]

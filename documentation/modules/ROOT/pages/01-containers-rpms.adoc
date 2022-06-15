@@ -1,0 +1,9 @@
+[#containerrpms]
+=== Installing container tools
+
+This is the RHEL version we all know available for several hardware architectures:
+
+1. x86_64
+2. ARM
+3. IBM Power
+4. IBM zSeries

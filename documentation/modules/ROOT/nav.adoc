@@ -1,6 +1,2 @@
 * xref:00-welcome.adoc[0. Welcome]
 ** xref:00-welcome.adoc#introduction[Introduction]
-
-* xref:02-deploy.adoc[2. Deploy Service]
-** xref:02-deploy.adoc#package[Build Service]
-** xref:02-deploy.adoc#deploy[Deploy Dervice]
