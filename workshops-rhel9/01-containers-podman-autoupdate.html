@@ -149,6 +149,28 @@ EOF
 [core@rhel9 ~]$</code></pre>
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>OnBootSec</strong> tells the timer to start 30 seconds after booting.</p>
+</li>
+<li>
+<p><strong>OnUnitActivateSec</strong> tells the timer to start every 20 seconds after the first timer activation.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can tune these parameters according your needs.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Now we will create the unit that will be executed by the above timer:</p>
 </div>
@@ -323,6 +345,32 @@ quay.io/rhte_2019/2048-demoday  latest      d48137cd5225  6 hours ago  382 MB
 CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
 [core@rhel9 ~]$</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>As the container is not running we will use the browser to request the application. After that wait a while and you could see something similar to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED         SIZE
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  30 minutes ago  382 MB
+&lt;none&gt;                          &lt;none&gt;      d48137cd5225  6 hours ago     382 MB
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can see that there are two images and the <strong>latest</strong> tag is pointing to a new one. If we compare the <strong>IMAGE ID</strong> with those in the <strong>workshop</strong> user we will see that these are the <strong>IMAGE ID</strong> for the <strong>v1</strong> and <strong>v2</strong> images.</p>
+</div>
+<div class="paragraph">
+<p>If we reload the application in the browser we could see the new version with the banner:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/serverless/2048v2.png" alt="2048v2">
+</div>
+</div>
+<div class="paragraph">
+<p>As we can see the application has been successfully updated.</p>
 </div>
 </div>
 <nav class="pagination">
