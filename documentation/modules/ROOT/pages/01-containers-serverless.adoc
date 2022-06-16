@@ -312,3 +312,5 @@ CONTAINER ID  IMAGE                                  COMMAND     CREATED        
 [core@rhel9 ~]$
 
 So after a period of inactivity the container is stopped.
+
+Access the application again and check that the container is started and it stops after an inactivity time.

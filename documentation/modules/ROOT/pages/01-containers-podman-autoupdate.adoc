@@ -1,2 +1,8 @@
 [#podmanautoupdate]
 === Podman auto-update
+
+In this section we are going to see how to automatically update the container image we have just deployed.
+
+We need to manage the lifecycle application for the container image, so we will need to update the image according our needs.
+
+image::serverless/podman-autoupdate.png[]
