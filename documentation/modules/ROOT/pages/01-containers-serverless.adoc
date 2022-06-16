@@ -22,7 +22,7 @@ WantedBy=multi-user.target default.target
 EOF
 [root@rhel9 ~]#
 
-=== Buiding the containerized application
+=== Building the containerized application
 
 We will use the following application: https://github.com/alexwhen/docker-2048[2048 game].
 
@@ -147,7 +147,7 @@ This is how the serverless application will work:
 
 image::serverless/podman-serverless.png[]
 
-The first time the container image is executed it will be downloaded from the registry. So we will create a systemd unit that will downloaded the image from the registry when the server boots to reduce the response time in the the firts request to the application.
+The first time the container image is executed it will be downloaded from the registry. So we will create a systemd unit that will downloaded the image from the registry when the server boots to reduce the response time in the first application request.
 
 So as the **core** user we will create the directories where the systemd units will be created:
 
@@ -158,7 +158,7 @@ So as the **core** user we will create the directories where the systemd units w
 Now we will create the systemd unit to download the image from the registry to the server:
 
 [source,bash,subs="+macros,+attributes"]
-[core@rhel9 ~]$ cat << EOF .config/systemd/user/pre-pull-container-image.service 
+[core@rhel9 ~]$ cat << EOF .config/systemd/user/pre-pull-container-image.service
 [Service]
 Type=oneshot
 ExecStart=podman pull quay.io/rhte_2019/2048-demoday:latest
