@@ -27,3 +27,7 @@ EOF
 
 Serverless containers are containers that are started when requests are received and the container will be stopped when no requests are received.
 
+This is how the serverless application will work:
+
+include::serverless/podman-serverless.png[]
+
