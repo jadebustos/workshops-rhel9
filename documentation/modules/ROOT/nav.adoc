@@ -1,3 +1,4 @@
 * xref:01-containers.adoc[1. Deploying Containers]
 ** xref:01-containers-rpms.adoc[1.1 Installing container tools]
 ** xref:01-containers-serverless.adoc[1.2 Deploying Serverless containers]
+** xref:01-containers-podman-autoupdate.adoc[1.3 Podman auto-update]
