@@ -117,10 +117,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="serverless"><a class="anchor" href="#serverless"></a>Deploying Serverless containers</h3>
-<div class="paragraph">
-<p>Serverless containers are containers that are started when requests are received and the container will be stopped when no requests are received.</p>
-</div>
+<h3 id="serverless"><a class="anchor" href="#serverless"></a>Enabling user services run whether user logged in or not</h3>
 <div class="paragraph">
 <p>We are going to deploy the container as an unprivileged user (e.g. rootless).</p>
 </div>
@@ -130,8 +127,6 @@
 <div class="paragraph">
 <p>When systemd units are used by non-root user are only started when the user starts a session and they are terminated when the user closes the session. Obviously this is not the behaviour we want to run an application.</p>
 </div>
-<div class="sect3">
-<h4 id="_enabling_user_services_run_whether_user_logged_in_or_not"><a class="anchor" href="#_enabling_user_services_run_whether_user_logged_in_or_not"></a>Enabling user services run whether user logged in or not</h4>
 <div class="paragraph">
 <p>As we are going to use the user <strong>core</strong> to run the Serverless container we need to allow this user services run whether core user is logged or not:</p>
 </div>
@@ -139,23 +134,22 @@
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# cat &lt;&lt; EOF &gt; /etc/systemd/system/enable-linger.service
 ### Editing /etc/systemd/system/enable-linger.service.d/override.conf
-### Anything between here and the comment below will become the new contents of the file</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Type=oneshot
-ExecStart=loginctl enable-linger core</p>
-</div>
-<div class="paragraph">
-<p>WantedBy=multi-user.target default.target</p>
+### Anything between here and the comment below will become the new contents of the file
+[Service]
+Type=oneshot
+ExecStart=loginctl enable-linger core
+[Install]
+WantedBy=multi-user.target default.target
+### Lines below this comment will be discarded
+EOF
+[root@rhel9 ~]#</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lines_below_this_comment_will_be_discarded"><a class="anchor" href="#_lines_below_this_comment_will_be_discarded"></a>Lines below this comment will be discarded</h3>
+<h3 id="_deploying_serverless_containers"><a class="anchor" href="#_deploying_serverless_containers"></a>Deploying Serverless containers</h3>
 <div class="paragraph">
-<p>EOF
-[root@rhel9 ~]#</p>
+<p>Serverless containers are containers that are started when requests are received and the container will be stopped when no requests are received.</p>
 </div>
 </div>
 </div>
