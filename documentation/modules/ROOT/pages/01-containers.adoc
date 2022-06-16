@@ -6,5 +6,5 @@ include::_attributes.adoc[]
 
 In this section we will see how to deploy and run containers in RHEL 9.
 
-include::01-containers-rpms.adoc
-include::01-containers-serverless.adoc
+include::01-containers-rpms.adoc[]
+include::01-containers-serverless.adoc[]
