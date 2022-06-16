@@ -96,10 +96,87 @@
 <div class="paragraph">
 <p>We need to manage the lifecycle application for the container image, so we will need to update the image according our needs.</p>
 </div>
+<div class="paragraph">
+<p>When deploying multiple devices, for instance in Edge deployments, updating the containers is a challenge. Using <strong>podman auto-update</strong> we can automatically update them with only update the container image in the registry.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_we_will_implement_the_automatic_updates"><a class="anchor" href="#_how_we_will_implement_the_automatic_updates"></a>How we will implement the automatic updates</h3>
+<div class="paragraph">
+<p>We will implement the automatic updates in the following way:</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/serverless/podman-autoupdate.png" alt="podman autoupdate">
 </div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A systemd timer will be used to periodically look for new versions for the container image in the registry.</p>
+</li>
+<li>
+<p>If a new image is found in the registry podman will download it.</p>
+</li>
+<li>
+<p>The running container image will be updated.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_the_systemd_timer"><a class="anchor" href="#_creating_the_systemd_timer"></a>Creating the systemd timer</h3>
+<div class="paragraph">
+<p>Using the <strong>core</strong> user create the timer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/podman-auto-update.timer
+[Unit]
+Description=Podman auto-update timer
+[Timer]
+# This example runs the podman auto-update daily within a two-hour
+# randomized window to reduce system load
+#OnCalendar=daily
+#Persistent=true
+#RandomizedDelaySec=7200
+# activate every minute
+OnBootSec=30
+OnUnitActiveSec=30
+[Install]
+WantedBy=timers.target
+EOF
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we will create the unit that will be executed by the above timer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/podman-auto-update.service
+[Unit]
+Description=Podman auto-update service
+Documentation=man:podman-auto-update(1)
+[Service]
+ExecStart=/usr/bin/podman auto-update
+[Install]
+WantedBy=multi-user.target default.target
+EOF
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+We can create an script to perform some more tasks if needed and configure the script within <strong>[Service]</strong> section in <strong>ExecStart</strong>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <nav class="pagination">
