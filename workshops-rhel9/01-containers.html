@@ -351,7 +351,63 @@ EOF
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Replace the image for your owns.
+Replace the image for your own&#8217;s one.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As we are going to expose the application to the world we will need create a systemd socket. We will use the port 8080 to expose the application to the world so we will create the socket:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/container-httpd-proxy.socket
+[Socket]
+ListenStream=192.168.1.144:8080
+FreeBind=true
+[Install]
+WantedBy=sockets.target
+EOF
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Replace the 192.168.1.144 IP for your server&#8217;s one.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now we will create a proxy socket that will start the container and will forward the requests from the 8080 port to the container:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/container-httpd-proxy.service
+[Unit]
+Requires=container-httpd.service
+After=container-httpd.service
+Requires=container-httpd-proxy.socket
+After=container-httpd-proxy.socket
+[Service]
+ExecStart=/usr/lib/systemd/systemd-socket-proxyd --exit-idle-time=10 127.0.0.1:8080
+EOF
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Adjust <strong>--exit-idle-time</strong> as you prefer. This  parameter is used to stop the container after this inactivity time, in this case 10 seconds. Bare in mind that although you are not sending requests to the application maybe the application itself is sending some traffic. That means that it could take a bit more time than 10 seconds to stop the application. This application takes one minute or so to be stopped. You can check the man page for <strong>systemd-socket-proxy</strong> to get more information.
 </td>
 </tr>
 </table>
