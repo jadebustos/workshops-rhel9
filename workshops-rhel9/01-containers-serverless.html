@@ -189,7 +189,7 @@ EOF
 # buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v1
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v1
 FROM registry.redhat.io/rhel9/nginx-120
-MAINTAINER Jose Angel de Bustos &lt;<a href="mailto:abustosp@redhat.com">abustosp@redhat.com</a>&gt;
+MAINTAINER Your Name here &lt;Your email Here&gt;, this is optional
 COPY 2048 /opt/app-root/src
 COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8081
@@ -223,7 +223,7 @@ Login Succeeded
 </div>
 </div>
 <div class="paragraph">
-<p>Now to build the container image:..</p>
+<p>Now to build the container image:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -264,6 +264,9 @@ registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379
 [workshop@rhel9 Dockerfiles]$</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Now the image is ready to be deployed.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_deploying_serverless_containers"><a class="anchor" href="#_deploying_serverless_containers"></a>Deploying Serverless containers</h3>
@@ -277,6 +280,47 @@ registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379
 <div class="content">
 <img src="_images/serverless/podman-serverless.png" alt="podman serverless">
 </div>
+</div>
+<div class="paragraph">
+<p>The first time the container image is executed it will be downloaded from the registry. So we will create a systemd unit that will downloaded the image from the registry when the server boots to reduce the response time in the the firts request to the application.</p>
+</div>
+<div class="paragraph">
+<p>So as the <strong>core</strong> user we will create the directories where the systemd units will be created:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ mkdir -p .config/systemd/user
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we will create the systemd unit to download the image from the registry to the server:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/pre-pull-container-image.service
+[Service]
+Type=oneshot
+ExecStart=podman pull quay.io/rhte_2019/2048-demoday:latest
+RestartSec=30
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target default.target
+EOF
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Replace the image for your owns.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <nav class="pagination">
