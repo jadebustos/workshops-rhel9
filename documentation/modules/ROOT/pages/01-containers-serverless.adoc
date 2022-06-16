@@ -242,3 +242,8 @@ WantedBy=default.target
 [core@rhel9 ~]$ 
 
 We are almost done, but we need some additional configuration.
+
+We have configured the proxy socket to stop the container after 10 seconds of inactivity so we must configure the systemd unit as well. For that in the **container-httpd.service** we have to add to the **[Unit]** service the following:
+
+[source]
+StopWhenUnneeded=true
