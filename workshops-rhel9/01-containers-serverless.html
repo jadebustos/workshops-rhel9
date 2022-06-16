@@ -120,7 +120,7 @@ EOF
 </div>
 </div>
 <div class="sect2">
-<h3 id="_buiding_the_containerized_application"><a class="anchor" href="#_buiding_the_containerized_application"></a>Buiding the containerized application</h3>
+<h3 id="_building_the_containerized_application"><a class="anchor" href="#_building_the_containerized_application"></a>Building the containerized application</h3>
 <div class="paragraph">
 <p>We will use the following application: <a href="https://github.com/alexwhen/docker-2048">2048 game</a>.</p>
 </div>
@@ -286,7 +286,7 @@ registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379
 </div>
 </div>
 <div class="paragraph">
-<p>The first time the container image is executed it will be downloaded from the registry. So we will create a systemd unit that will downloaded the image from the registry when the server boots to reduce the response time in the the firts request to the application.</p>
+<p>The first time the container image is executed it will be downloaded from the registry. So we will create a systemd unit that will downloaded the image from the registry when the server boots to reduce the response time in the first application request.</p>
 </div>
 <div class="paragraph">
 <p>So as the <strong>core</strong> user we will create the directories where the systemd units will be created:</p>
