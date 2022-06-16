@@ -4,9 +4,8 @@
 To install the container tools we can install it:
 
 [source,bash,subs="+macros,+attributes"]
----
 [root@rhel9 ~]# dnf install podman buildah skopeo -y
----
+
 
 * **podman** used to run containers.
 * **buildah** used to create container images.

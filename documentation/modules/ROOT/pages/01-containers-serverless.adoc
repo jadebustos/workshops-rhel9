@@ -3,3 +3,29 @@
 
 Serverless containers are containers that are started when requests are received and the container will be stopped when no requests are received.
 
+We are going to deploy the container as an unprivileged user (e.g. rootless). 
+
+As we need to use systemd to run the container we will need that these units we are going to use can be executed every time a request is received.
+
+When systemd units are used by non-root user are only started when the user starts a session and they are terminated when the user closes the session. Obviously this is not the behaviour we want to run an application.
+
+==== Enabling user services run whether user logged in or not
+
+As we are going to use the user **core** to run the Serverless container we need to allow this user services run whether core user is logged or not:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# cat << EOF > /etc/systemd/system/enable-linger.service
+### Editing /etc/systemd/system/enable-linger.service.d/override.conf
+### Anything between here and the comment below will become the new contents of the file
+
+[Service]
+Type=oneshot
+ExecStart=loginctl enable-linger core
+
+[Install]
+WantedBy=multi-user.target default.target
+
+### Lines below this comment will be discarded
+
+EOF
+[root@rhel9 ~]#
