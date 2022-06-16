@@ -470,6 +470,14 @@ WantedBy=default.target
 <div class="paragraph">
 <p>We are almost done, but we need some additional configuration.</p>
 </div>
+<div class="paragraph">
+<p>We have configured the proxy socket to stop the container after 10 seconds of inactivity so we must configure the systemd unit as well. For that in the <strong>container-httpd.service</strong> we have to add to the <strong>[Unit]</strong> service the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">StopWhenUnneeded=true</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
