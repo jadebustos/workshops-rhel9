@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Untitled :: RHEL 9 Workshops</title>
-    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/01-containers-rpms.html">
-    <link rel="prev" href="01-containers.html">
-    <link rel="next" href="01-containers-serverless.html">
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/01-containers-podman-autoupdate.html">
+    <link rel="prev" href="01-containers-serverless.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -55,13 +54,13 @@
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="01-containers.html">1. Deploying Containers</a>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="01-containers-rpms.html">1.1 Installing container tools</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="01-containers-serverless.html">1.2 Deploying Serverless containers</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="01-containers-podman-autoupdate.html">1.3 Podman auto-update</a>
   </li>
 </ul>
@@ -82,40 +81,19 @@
   <ul>
     <li><a href="index.html">RHEL 9 Workshops</a></li>
     <li><a href="01-containers.html">1. Deploying Containers</a></li>
-    <li><a href="01-containers-rpms.html">1.1 Installing container tools</a></li>
+    <li><a href="01-containers-podman-autoupdate.html">1.3 Podman auto-update</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/01-containers-rpms.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/01-containers-podman-autoupdate.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
 <div class="sect2">
-<h3 id="containerrpms"><a class="anchor" href="#containerrpms"></a>Installing container tools</h3>
-<div class="paragraph">
-<p>To install the container tools we can install it:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf install podman buildah skopeo -y</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>podman</strong> used to run containers.</p>
-</li>
-<li>
-<p><strong>buildah</strong> used to create container images.</p>
-</li>
-<li>
-<p><strong>skopeo</strong> used to work with remote images registries.</p>
-</li>
-</ul>
-</div>
+<h3 id="podmanautoupdate"><a class="anchor" href="#podmanautoupdate"></a>Podman auto-update</h3>
+
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="01-containers.html">1. Deploying Containers</a></span>
-  <span class="next"><a href="01-containers-serverless.html">1.2 Deploying Serverless containers</a></span>
+  <span class="prev"><a href="01-containers-serverless.html">1.2 Deploying Serverless containers</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

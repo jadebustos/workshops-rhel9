@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://redhat-scholars.github.io/course-template/workshops-rhel9/01-containers-podman-autoupdate.html</loc>
+<lastmod>2022-06-16T13:13:39.789Z</lastmod>
+</url>
+<url>
 <loc>https://redhat-scholars.github.io/course-template/workshops-rhel9/01-containers-rpms.html</loc>
-<lastmod>2022-06-16T12:04:13.495Z</lastmod>
+<lastmod>2022-06-16T13:13:39.789Z</lastmod>
 </url>
 <url>
 <loc>https://redhat-scholars.github.io/course-template/workshops-rhel9/01-containers-serverless.html</loc>
-<lastmod>2022-06-16T12:04:13.495Z</lastmod>
+<lastmod>2022-06-16T13:13:39.789Z</lastmod>
 </url>
 <url>
 <loc>https://redhat-scholars.github.io/course-template/workshops-rhel9/01-containers.html</loc>
-<lastmod>2022-06-16T12:04:13.495Z</lastmod>
+<lastmod>2022-06-16T13:13:39.789Z</lastmod>
 </url>
 <url>
 <loc>https://redhat-scholars.github.io/course-template/workshops-rhel9/index.html</loc>
-<lastmod>2022-06-16T12:04:13.495Z</lastmod>
+<lastmod>2022-06-16T13:13:39.789Z</lastmod>
 </url>
 </urlset>
