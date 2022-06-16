@@ -23,6 +23,121 @@ WantedBy=multi-user.target default.target
 EOF
 [root@rhel9 ~]#
 
+=== Buiding the containerized application
+
+We will use the following application: https://github.com/alexwhen/docker-2048[2048 game].
+
+You can use your own computer or the RHEL 9 server to build it. If you use the RHEL 9 server use a different user that the **core** user.
+
+In this case we will use the RHEL 9 server and we build the container image using the **workshop** user.
+
+You will need to clone the repository:
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 ~]$ mkdir Dockerfiles
+[workshop@rhel9 Dockerfiles]$ cd Dockerfiles
+[workshop@rhel9 Dockerfiles]$ https://github.com/alexwhen/docker-2048.git
+[workshop@rhel9 Dockerfiles]$ ln -s docker-2048/ 2048
+
+As this is a web application and we will use nginx we will need the nginx configuration file:
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 Dockerfiles]$ cat << EOF nginx.conf
+worker_processes  1;
+include /usr/share/nginx/modules/*.conf;
+events {
+    worker_connections 1024;
+}
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+    access_log  /var/log/nginx/access.log  main;
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 4096;
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /opt/app-root/etc/nginx.d/*.conf;
+    server {
+        listen       8081;
+        server_name  localhost;
+        root         /opt/app-root/src;
+        # Load configuration files for the default server block.
+        include /opt/app-root/etc/nginx.default.d/*.conf;
+        location / {
+            include /etc/nginx/mime.types;
+            root   /opt/app-root/src/2048;
+            index  index.html;
+        }
+    }
+EOF
+[workshop@rhel9 Dockerfiles]$
+
+Now we are going to create the image container. We will write the following Dockerfile:
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 Dockerfiles]$ cat << EOF Dockerfile.2048.rhel9.v1
+# buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v1
+# podman run --rm -d -p 8080:8081 localhost/2048-demoday:v1
+FROM registry.redhat.io/rhel9/nginx-120
+MAINTAINER Jose Angel de Bustos <abustosp@redhat.com> 
+COPY 2048 /opt/app-root/src
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 8081
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+EOF
+[workshop@rhel9 Dockerfiles]$
+
+TIP: We are using an image with nginx provided by Red Hat. If you do not have access to Red Hat images you can look for a different image but in this case you probably need to modify the Dockerfile because the application source code could change its location and the nginx configuration file as well.
+
+If you are using the Red Hat container image you will need to login to Red Hat's registry:
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 Dockerfiles]$ podman login registry.redhat.io
+Username: <YOUR RED HAT USER HERE>
+Password: <YOUR PASSWORD HERE>
+Login Succeeded
+[workshop@rhel9 Dockerfiles]$
+
+Now to build the container image:..
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v1
+...
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED        SIZE
+localhost/2048-demoday              v1          d48137cd5225  5 seconds ago  382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379 MB
+[workshop@rhel9 Dockerfiles]$
+
+Now we will have to upload the image to one registry. We will use https://quay.io[Quay] but you can use a different one. As we are going to upload the image we need to login:
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 Dockerfiles]$ podman login quay.io
+Username: <YOUR REGISTRY USER HERE>
+Password: <YOUR PASSWORD HERE>
+Login Succeeded
+[workshop@rhel9 Dockerfiles]$
+
+We need to tag the image and upload it to the registry, so you will need to change the following according your registry and account:
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 Dockerfiles]$ podman tag localhost/2048-demoday:v1 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED        SIZE
+localhost/2048-demoday              v1          d48137cd5225  9 minutes ago  382 MB
+quay.io/rhte_2019/2048-demoday      latest      d48137cd5225  9 minutes ago  382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379 MB
+[workshop@rhel9 Dockerfiles]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 Dockerfiles]$
+
 === Deploying Serverless containers
 
 Serverless containers are containers that are started when requests are received and the container will be stopped when no requests are received.
