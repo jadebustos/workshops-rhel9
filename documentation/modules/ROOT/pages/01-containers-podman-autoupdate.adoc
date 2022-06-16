@@ -186,3 +186,9 @@ If we reload the application in the browser we could see the new version with th
 image::serverless/2048v2.png[]
 
 As we can see the application has been successfully updated.
+
+=== Homework
+
+Improve the auto-update to avoid requesting the application from the browser.
+
+Modify the **podman-auto-update.service** to call a script which performs an application request and after that performs the autoupdate.
