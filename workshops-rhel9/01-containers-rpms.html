@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Untitled :: RHEL 9 Workshops</title>
     <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/01-containers-rpms.html">
-    <link rel="prev" href="01-containers.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="01-containers-serverless.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -52,10 +53,13 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="01-containers.html">1. Introduction</a>
+    <span class="nav-text">xref:01-containers.adoc[1. Deploying Containers in RHEL 9</span>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="01-containers-rpms.html">1.1 Installing container tools</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-containers-serverless.html">1.2 Deploying Serverless containers</a>
   </li>
 </ul>
   </li>
@@ -74,7 +78,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">RHEL 9 Workshops</a></li>
-    <li><a href="01-containers.html">1. Introduction</a></li>
+    <li>xref:01-containers.adoc[1. Deploying Containers in RHEL 9</li>
     <li><a href="01-containers-rpms.html">1.1 Installing container tools</a></li>
   </ul>
 </nav>
@@ -85,27 +89,30 @@
 <div class="sect2">
 <h3 id="containerrpms"><a class="anchor" href="#containerrpms"></a>Installing container tools</h3>
 <div class="paragraph">
-<p>This is the RHEL version we all know available for several hardware architectures:</p>
+<p>To install the container tools we can install it:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf install podman buildah skopeo -y</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p>x86_64</p>
+<p><strong>podman</strong> used to run containers.</p>
 </li>
 <li>
-<p>ARM</p>
+<p><strong>buildah</strong> used to create container images.</p>
 </li>
 <li>
-<p>IBM Power</p>
+<p><strong>skopeo</strong> used to work with remote images registries.</p>
 </li>
-<li>
-<p>IBM zSeries</p>
-</li>
-</ol>
+</ul>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="01-containers.html">1. Introduction</a></span>
+  <span class="prev"><a href="index.html">RHEL 9 Workshops</a></span>
+  <span class="next"><a href="01-containers-serverless.html">1.2 Deploying Serverless containers</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
