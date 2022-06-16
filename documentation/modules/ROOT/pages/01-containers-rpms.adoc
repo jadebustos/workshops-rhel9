@@ -1,9 +1,12 @@
 [#containerrpms]
 === Installing container tools
 
-This is the RHEL version we all know available for several hardware architectures:
+To install the container tools we can install it:
 
-1. x86_64
-2. ARM
-3. IBM Power
-4. IBM zSeries
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# dnf install podman buildah skopeo -y
+
+* **podman** used to run containers.
+* **buildah** used to create container images.
+* **skopeo** used to work with remote images registries.
+
