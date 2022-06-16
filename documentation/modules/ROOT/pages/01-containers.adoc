@@ -2,8 +2,7 @@
 include::_attributes.adoc[]
 
 [#deployingcontainers]
-== Deploying containers in RHEL 9
-
+== Deploying containers
 In this section we will see how to deploy and run containers in RHEL 9.
 
 include::01-containers-rpms.adoc[]

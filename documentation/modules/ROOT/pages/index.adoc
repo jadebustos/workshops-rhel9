@@ -28,6 +28,6 @@ This is a new version designed for Edge computing cases which is based in an inm
 
 [.tile]
 .xref:01-containers.adoc[Containers]
-* xref:01-containers.adoc#deployingcontainers[Deploying containers in RHEL 9]
+* xref:01-containers.adoc#deployingcontainers[Deploying containers]
 ** xref:01-containers-rpms.adoc#containerrpms[Installing container tools]
 ** xref:01-containers-serverless.adoc#serverless[Deploying Serverless containers]
