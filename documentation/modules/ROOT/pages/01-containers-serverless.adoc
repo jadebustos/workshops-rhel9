@@ -86,7 +86,7 @@ Now we are going to create the image container. We will write the following Dock
 # buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v1
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v1
 FROM registry.redhat.io/rhel9/nginx-120
-MAINTAINER Jose Angel de Bustos <abustosp@redhat.com> 
+MAINTAINER Your Name here <Your email Here>, this is optional 
 COPY 2048 /opt/app-root/src
 COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8081
@@ -105,7 +105,7 @@ Password: <YOUR PASSWORD HERE>
 Login Succeeded
 [workshop@rhel9 Dockerfiles]$
 
-Now to build the container image:..
+Now to build the container image:
 
 [source,bash,subs="+macros,+attributes"]
 [workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v1
@@ -138,6 +138,8 @@ registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379
 ...
 [workshop@rhel9 Dockerfiles]$
 
+Now the image is ready to be deployed.
+
 === Deploying Serverless containers
 
 Serverless containers are containers that are started when requests are received and the container will be stopped when no requests are received.
@@ -146,3 +148,26 @@ This is how the serverless application will work:
 
 image::serverless/podman-serverless.png[]
 
+The first time the container image is executed it will be downloaded from the registry. So we will create a systemd unit that will downloaded the image from the registry when the server boots to reduce the response time in the the firts request to the application.
+
+So as the **core** user we will create the directories where the systemd units will be created:
+
+[source,bash,subs="+macros,+attributes"]
+[core@rhel9 ~]$ mkdir -p .config/systemd/user
+[core@rhel9 ~]$
+
+Now we will create the systemd unit to download the image from the registry to the server:
+
+[source,bash,subs="+macros,+attributes"]
+[core@rhel9 ~]$ cat << EOF .config/systemd/user/pre-pull-container-image.service 
+[Service]
+Type=oneshot
+ExecStart=podman pull quay.io/rhte_2019/2048-demoday:latest
+RestartSec=30
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target default.target
+EOF
+[core@rhel9 ~]$
+
+TIP: Replace the image for your owns.
