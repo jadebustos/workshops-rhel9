@@ -9,7 +9,7 @@ Podman will check the new downloaded container image and if the new container im
 
 We will implement the automatic rollback in the following way:
 
-images::podman-autoupdate-rollback.png[]
+images::serverless/podman-autoupdate-rollback.png[]
 
 1. After the container image has been downloaded podman will check that the container image starts successfully.
 2. If not, podman will automatically rollback to the previous working container image.
