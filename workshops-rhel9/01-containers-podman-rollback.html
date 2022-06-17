@@ -93,7 +93,31 @@
 <article class="doc">
 <div class="sect2">
 <h3 id="podmanrollback"><a class="anchor" href="#podmanrollback"></a>Performing automatic rollbacks</h3>
-
+<div class="paragraph">
+<p>As podman is able to perform automatic rollbacks if there is some problem with the update automatic rollbacks are needed as well.</p>
+</div>
+<div class="paragraph">
+<p>Podman will check the new downloaded container image and if the new container image does not work an automatic rollback will be performed to the previous working container image</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_we_will_implement_the_automatic_rollback"><a class="anchor" href="#_how_we_will_implement_the_automatic_rollback"></a>How we will implement the automatic rollback</h3>
+<div class="paragraph">
+<p>We will implement the automatic rollback in the following way:</p>
+</div>
+<div class="paragraph">
+<p>images::podman-autoupdate-rollback.png[]</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>After the container image has been downloaded podman will check that the container image starts successfully.</p>
+</li>
+<li>
+<p>If not, podman will automatically rollback to the previous working container image.</p>
+</li>
+</ol>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="01-containers-podman-autoupdate.html">1.3 Podman auto-update</a></span>
