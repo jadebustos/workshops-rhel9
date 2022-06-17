@@ -1,2 +1,15 @@
 [#podmanrollback]
 === Performing automatic rollbacks
+
+As podman is able to perform automatic rollbacks if there is some problem with the update automatic rollbacks are needed as well.
+
+Podman will check the new downloaded container image and if the new container image does not work an automatic rollback will be performed to the previous working container image
+
+=== How we will implement the automatic rollback
+
+We will implement the automatic rollback in the following way:
+
+images::podman-autoupdate-rollback.png[]
+
+1. After the container image has been downloaded podman will check that the container image starts successfully.
+2. If not, podman will automatically rollback to the previous working container image.
