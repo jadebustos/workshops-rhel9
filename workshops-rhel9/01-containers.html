@@ -266,7 +266,7 @@ EOF
 # buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v1
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v1
 FROM registry.redhat.io/rhel9/nginx-120
-MAINTAINER Your Name here &lt;Your email Here&gt;, this is optional
+MAINTAINER ---YOUR NAME--- &lt;YOUR EM@IL&gt;
 COPY 2048 /opt/app-root/src
 COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8081
@@ -815,7 +815,7 @@ WantedBy=default.target
 # buildah build -f Dockerfile.2048.rhel9.v2 -t 2048-demoday:v2
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v2
 FROM registry.redhat.io/rhel9/nginx-120
-MAINTAINER Jose Angel de Bustos &lt;<a href="mailto:abustosp@redhat.com">abustosp@redhat.com</a>&gt;
+MAINTAINER ---YOUR NAME--- &lt;YOUR EM@IL&gt;
 COPY 2048 /opt/app-root/src
 COPY index.html /opt/app-root/src/2048
 COPY demoday.png /opt/app-root/src/2048/banner.png
@@ -952,7 +952,7 @@ quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  30 minutes ago  382 MB
 # buildah build -f Dockerfile.2048.rhel9.v3 -t 2048-demoday:v3
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v3
 FROM registry.redhat.io/rhel9/nginx-120
-MAINTAINER Jose Angel de Bustos &lt;<a href="mailto:abustosp@redhat.com">abustosp@redhat.com</a>&gt;
+MAINTAINER ---YOUR NAME--- &lt;YOUR EM@IL&gt;
 COPY 2048 /opt/app-root/src
 EXPOSE 8081
 ENTRYPOINT ["exit", "255"]
@@ -1151,26 +1151,17 @@ quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago        382
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF Dockerfile.2048.rhel9.v4
 # buildah build -f Dockerfile.2048.rhel9.v4 -t 2048-demoday:v4
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v4
-FROM registry.redhat.io/rhel9/nginx-120</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>MAINTAINER Jose Angel de Bustos &lt;<a href="mailto:abustosp@redhat.com">abustosp@redhat.com</a>&gt;</p>
-</div>
-<div class="paragraph">
-<p>COPY 2048 /opt/app-root/src
+FROM registry.redhat.io/rhel9/nginx-120
+MAINTAINER ---YOUR NAME--- &lt;YOUR EM@IL&gt;
+COPY 2048 /opt/app-root/src
 COPY index.html /opt/app-root/src/2048
 COPY awesome.png /opt/app-root/src/2048/banner.png
-COPY nginx.conf /etc/nginx/nginx.conf</p>
-</div>
-<div class="paragraph">
-<p>EXPOSE 8081</p>
-</div>
-<div class="paragraph">
-<p>ENTRYPOINT ["nginx", "-g", "daemon off;"]
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 8081
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
 EOF
 [workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v4 -t 2048-demoday:v4
-&#8230;&#8203;
+...
 [workshop@rhel9 Dockerfiles]$ podman images
 REPOSITORY                          TAG         IMAGE ID      CREATED         SIZE
 localhost/2048-demoday              v4          25d1fb487f23  5 seconds ago   382 MB
@@ -1188,7 +1179,8 @@ localhost/2048-demoday              v3          a9a607702567  9 minutes ago   38
 localhost/2048-demoday              v2          618f3cb61744  19 minutes ago  382 MB
 localhost/2048-demoday              v1          d48137cd5225  3 weeks ago     382 MB
 registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  2 months ago    379 MB
-[workshop@rhel9 Dockerfiles]$</p>
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
 </div>
 <div class="admonitionblock tip">
 <table>
