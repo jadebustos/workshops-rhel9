@@ -134,7 +134,7 @@ EOF
 Now look for an png image (~ 917x509 pixels) and store it using **demoday.png** as filename and create the image:
 
 [source,bash,subs="+macros,+attributes"]
-[workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v2
+[workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v2 -t 2048-demoday:v2
 ...
 [workshop@rhel9 Dockerfiles]$ podman images
 REPOSITORY                          TAG         IMAGE ID      CREATED       SIZE

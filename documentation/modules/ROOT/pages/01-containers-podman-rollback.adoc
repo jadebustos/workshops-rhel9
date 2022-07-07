@@ -13,3 +13,69 @@ image::serverless/podman-autoupdate-rollback.png[]
 
 1. After the container image has been downloaded podman will check that the container image starts successfully.
 2. If not, podman will automatically rollback to the previous working container image.
+
+=== Creating a faulty image
+
+We will create a faulty image. So create a new Dockerfile as the **workshop** user:
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 Dockerfiles]$ cat << EOF Dockerfile.2048.rhel9.v3
+# buildah build -f Dockerfile.2048.rhel9.v3 -t 2048-demoday:v3
+# podman run --rm -d -p 8080:8081 localhost/2048-demoday:v3
+FROM registry.redhat.io/rhel9/nginx-120
+MAINTAINER Jose Angel de Bustos <abustosp@redhat.com> 
+COPY 2048 /opt/app-root/src
+EXPOSE 8081
+ENTRYPOINT ["exit", "255"]
+EOF
+[workshop@rhel9 Dockerfiles]$
+
+We build the container image:
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v3 -t 2048-demoday:v3
+...
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED       SIZE
+localhost/2048-demoday              v3          a9a607702567  3 seconds ago  382 MB
+localhost/2048-demoday              v2          618f3cb61744  10 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  5 hours ago   382 MB
+quay.io/rhte_2019/2048-demoday      latest      d48137cd5225  5 hours ago   382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago   379 MB
+[workshop@rhel9 Dockerfiles]$
+
+Tag the new image as the **latest** and upload it to the registry. Maybe you will need to perform a login in the registry:
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 Dockerfiles]$ podman tag localhost/2048-demoday:v3 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED        SIZE
+localhost/2048-demoday              v3          a9a607702567  58 seconds ago  382 MB
+quay.io/rhte_2019/2048-demoday      latest      a9a607702567  58 seconds ago  382 MB
+localhost/2048-demoday              v2          618f3cb61744  10 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  5 hours ago    382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379 MB
+[workshop@rhel9 Dockerfiles]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 Dockerfiles]$
+
+To update the container image the container must be running. As we have deployed a serverless application maybe the container is not running.
+
+First we are going to check the container images that are present for the **core** user and if there is some container running:
+
+[source,bash,subs="+macros,+attributes"]
+[core@rhel9 ~]$ podman ps
+CONTAINER ID  IMAGE                                  COMMAND     CREATED         STATUS             PORTS                     NAMES
+3b6c286c3cf8  quay.io/rhte_2019/2048-demoday:latest              24 seconds ago  Up 25 seconds ago  127.0.0.1:8080->8081/tcp  demoday
+[core@rhel9 ~]$ 
+
+We see that the container is running. After a while the container image will be updated:
+
+[source,bash,subs="+macros,+attributes"]
+[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED         SIZE
+<none>                          <none>      a9a607702567  15 minutes ago  382 MB
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago     382 MB
+[core@rhel9 ~]$
+
+We can see that the latest is pointing to the **IMAGE ID** for the v2 version and the image tagged as **<none>** is pointing to the v3 version (the faulty one). So podman has updated the image automatically as the image is a faulty one has performed an automatic rollback to the last working image.
