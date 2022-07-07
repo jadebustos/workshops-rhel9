@@ -157,6 +157,9 @@ registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago   379 
 [workshop@rhel9 Dockerfiles]$</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_performing_the_rollback_automatically"><a class="anchor" href="#_performing_the_rollback_automatically"></a>Performing the rollback automatically</h3>
 <div class="paragraph">
 <p>Tag the new image as the <strong>latest</strong> and upload it to the registry. Maybe you will need to perform a login in the registry:</p>
 </div>
@@ -203,6 +206,54 @@ quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago     382 MB
 </div>
 <div class="paragraph">
 <p>We can see that the latest is pointing to the <strong>IMAGE ID</strong> for the v2 version and the image tagged as <strong>&lt;none&gt;</strong> is pointing to the v3 version (the faulty one). So podman has updated the image automatically as the image is a faulty one has performed an automatic rollback to the last working image.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_performing_the_rollback_manually"><a class="anchor" href="#_performing_the_rollback_manually"></a>Performing the rollback manually</h3>
+<div class="paragraph">
+<p>We are going to restore the v2 image as the latest in the repository just to perform the upgrade manually:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 ~]$ podman tag localhost/2048-demoday:v2 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 ~]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the v2 version is uploaded as the <strong>latest</strong> version to the repository we are going to check manually if there is some updates available for the container:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman auto-update --dry-run
+UNIT                     CONTAINER               IMAGE                                  POLICY      UPDATED
+container-httpd.service  86566938f37c (demoday)  quay.io/rhte_2019/2048-demoday:latest  registry    false
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The container has to be running. If the container is not running send some requests to the application using a browser.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED         SIZE
+&lt;none&gt;                          &lt;none&gt;      a9a607702567  15 minutes ago  382 MB
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago     382 MB
+[core@rhel9 ~]$ podman rmi a9a6
+[core@rhel9 ~]$
+[core@rhel9 ~]$</code></pre>
+</div>
 </div>
 </div>
 <nav class="pagination">
