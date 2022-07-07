@@ -44,6 +44,8 @@ quay.io/rhte_2019/2048-demoday      latest      d48137cd5225  5 hours ago   382 
 registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago   379 MB
 [workshop@rhel9 Dockerfiles]$
 
+=== Performing the rollback automatically
+
 Tag the new image as the **latest** and upload it to the registry. Maybe you will need to perform a login in the registry:
 
 [source,bash,subs="+macros,+attributes"]
@@ -79,3 +81,32 @@ quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago     382 MB
 [core@rhel9 ~]$
 
 We can see that the latest is pointing to the **IMAGE ID** for the v2 version and the image tagged as **<none>** is pointing to the v3 version (the faulty one). So podman has updated the image automatically as the image is a faulty one has performed an automatic rollback to the last working image.
+
+=== Performing the rollback manually
+
+We are going to restore the v2 image as the latest in the repository just to perform the upgrade manually:
+
+[source,bash,subs="+macros,+attributes"]
+[workshop@rhel9 ~]$ podman tag localhost/2048-demoday:v2 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 ~]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 ~]$
+
+Once the v2 version is uploaded as the **latest** version to the repository we are going to check manually if there is some updates available for the container:
+
+[source,bash,subs="+macros,+attributes"]
+[core@rhel9 ~]$ podman auto-update --dry-run
+UNIT                     CONTAINER               IMAGE                                  POLICY      UPDATED
+container-httpd.service  86566938f37c (demoday)  quay.io/rhte_2019/2048-demoday:latest  registry    false
+[core@rhel9 ~]$ 
+
+NOTE: The container has to be running. If the container is not running send some requests to the application using a browser.
+
+[source,bash,subs="+macros,+attributes"]
+[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED         SIZE
+<none>                          <none>      a9a607702567  15 minutes ago  382 MB
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago     382 MB
+[core@rhel9 ~]$ podman rmi a9a6
+[core@rhel9 ~]$
+[core@rhel9 ~]$
