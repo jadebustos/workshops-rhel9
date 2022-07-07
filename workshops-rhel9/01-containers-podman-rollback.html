@@ -121,6 +121,90 @@
 </ol>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_creating_a_faulty_image"><a class="anchor" href="#_creating_a_faulty_image"></a>Creating a faulty image</h3>
+<div class="paragraph">
+<p>We will create a faulty image. So create a new Dockerfile as the <strong>workshop</strong> user:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF Dockerfile.2048.rhel9.v3
+# buildah build -f Dockerfile.2048.rhel9.v3 -t 2048-demoday:v3
+# podman run --rm -d -p 8080:8081 localhost/2048-demoday:v3
+FROM registry.redhat.io/rhel9/nginx-120
+MAINTAINER Jose Angel de Bustos &lt;<a href="mailto:abustosp@redhat.com">abustosp@redhat.com</a>&gt;
+COPY 2048 /opt/app-root/src
+EXPOSE 8081
+ENTRYPOINT ["exit", "255"]
+EOF
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We build the container image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v3 -t 2048-demoday:v3
+...
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED       SIZE
+localhost/2048-demoday              v3          a9a607702567  3 seconds ago  382 MB
+localhost/2048-demoday              v2          618f3cb61744  10 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  5 hours ago   382 MB
+quay.io/rhte_2019/2048-demoday      latest      d48137cd5225  5 hours ago   382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago   379 MB
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tag the new image as the <strong>latest</strong> and upload it to the registry. Maybe you will need to perform a login in the registry:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ podman tag localhost/2048-demoday:v3 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED        SIZE
+localhost/2048-demoday              v3          a9a607702567  58 seconds ago  382 MB
+quay.io/rhte_2019/2048-demoday      latest      a9a607702567  58 seconds ago  382 MB
+localhost/2048-demoday              v2          618f3cb61744  10 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  5 hours ago    382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379 MB
+[workshop@rhel9 Dockerfiles]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To update the container image the container must be running. As we have deployed a serverless application maybe the container is not running.</p>
+</div>
+<div class="paragraph">
+<p>First we are going to check the container images that are present for the <strong>core</strong> user and if there is some container running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman ps
+CONTAINER ID  IMAGE                                  COMMAND     CREATED         STATUS             PORTS                     NAMES
+3b6c286c3cf8  quay.io/rhte_2019/2048-demoday:latest              24 seconds ago  Up 25 seconds ago  127.0.0.1:8080-&gt;8081/tcp  demoday
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We see that the container is running. After a while the container image will be updated:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED         SIZE
+&lt;none&gt;                          &lt;none&gt;      a9a607702567  15 minutes ago  382 MB
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago     382 MB
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can see that the latest is pointing to the <strong>IMAGE ID</strong> for the v2 version and the image tagged as <strong>&lt;none&gt;</strong> is pointing to the v3 version (the faulty one). So podman has updated the image automatically as the image is a faulty one has performed an automatic rollback to the last working image.</p>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="01-containers-podman-autoupdate.html">1.3 Podman auto-update</a></span>
 </nav>
