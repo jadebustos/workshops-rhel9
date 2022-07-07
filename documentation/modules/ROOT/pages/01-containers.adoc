@@ -14,6 +14,8 @@ We will use two different users in this machine:
 
 TIP: Pay attention to the commandline prompts to know the user you are working with.
 
+NOTE: This container workshop can be performed both RHEL 9 and RHEL 9 Edge.
+
 include::01-containers-rpms.adoc[]
 include::01-containers-serverless.adoc[]
 include::01-containers-podman-autoupdate.adoc[]
