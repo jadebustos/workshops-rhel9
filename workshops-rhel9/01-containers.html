@@ -126,6 +126,18 @@ Pay attention to the commandline prompts to know the user you are working with.
 </tr>
 </table>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This container workshop can be performed both RHEL 9 and RHEL 9 Edge.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
 <h3 id="containerrpms"><a class="anchor" href="#containerrpms"></a>Installing container tools</h3>
 <div class="paragraph">
@@ -572,9 +584,9 @@ udp6       0      0 ::1:323                 :::*                                
 <div class="paragraph">
 <p>Access the application using a browser:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock unresolved">
 <div class="content">
-<img src="_images/serverless/2048v1.png" alt="2048v1">
+<img src="serverless/2048v1.png" alt="2048v1">
 </div>
 </div>
 <div class="paragraph">
@@ -881,9 +893,9 @@ quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  30 minutes ago  382 MB
 <div class="paragraph">
 <p>If we reload the application in the browser we could see the new version with the banner:</p>
 </div>
-<div class="imageblock">
+<div class="imageblock unresolved">
 <div class="content">
-<img src="_images/serverless/2048v2.png" alt="2048v2">
+<img src="serverless/2048v2.png" alt="2048v2">
 </div>
 </div>
 <div class="paragraph">
@@ -1052,15 +1064,173 @@ The container has to be running. If the container is not running send some reque
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>We are going to delete the previous faulty image:</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman images
 REPOSITORY                      TAG         IMAGE ID      CREATED         SIZE
-&lt;none&gt;                          &lt;none&gt;      a9a607702567  15 minutes ago  382 MB
+&lt;none&gt;                          &lt;none&gt;      a9a607702567  55 minutes ago  382 MB
 quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago     382 MB
-[core@rhel9 ~]$ podman rmi a9a6
-[core@rhel9 ~]$
+[core@rhel9 ~]$ podman rmi a9a607702567
+Deleted: a9a607702567b6f8f881d71b50a66ff8ca85bba73deb35ba982285c4c2ec2cbd
+[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED      SIZE
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago  382 MB
 [core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We upload the faulty image as <strong>latest</strong> again:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 ~]$ podman tag localhost/2048-demoday:v3 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 ~]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We perform a simulation for the update:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman auto-update --dry-run
+UNIT                     CONTAINER               IMAGE                                  POLICY      UPDATED
+container-httpd.service  59a7926a388c (demoday)  quay.io/rhte_2019/2048-demoday:latest  registry    pending
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Remember that the container has to be running.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We can see that there is pending update. We perform the update manually:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman auto-update
+Trying to pull quay.io/rhte_2019/2048-demoday:latest...
+Getting image source signatures
+Copying blob ef04b8788421 skipped: already exists
+Copying blob 615933f54d5e skipped: already exists
+Copying blob 25ad9a06c050 skipped: already exists
+Copying blob be6104f7629e skipped: already exists
+Copying blob 3e71e5f07102 done
+Copying config a9a6077025 done
+Writing manifest to image destination
+Storing signatures
+UNIT                     CONTAINER               IMAGE                                  POLICY      UPDATED
+container-httpd.service  59a7926a388c (demoday)  quay.io/rhte_2019/2048-demoday:latest  registry    rolled back
+[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED            SIZE
+&lt;none&gt;                          &lt;none&gt;      a9a607702567  About an hour ago  382 MB
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago        382 MB
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As we can see the faulty images was downloaded as it is a faulty one a rollback was automatically performed to the last working image.</p>
+</div>
+<div class="paragraph">
+<p>Now we are going to build a new container image to perform the update simulating fixing the v3 container image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF Dockerfile.2048.rhel9.v4
+# buildah build -f Dockerfile.2048.rhel9.v4 -t 2048-demoday:v4
+# podman run --rm -d -p 8080:8081 localhost/2048-demoday:v4
+FROM registry.redhat.io/rhel9/nginx-120</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>MAINTAINER Jose Angel de Bustos &lt;<a href="mailto:abustosp@redhat.com">abustosp@redhat.com</a>&gt;</p>
+</div>
+<div class="paragraph">
+<p>COPY 2048 /opt/app-root/src
+COPY index.html /opt/app-root/src/2048
+COPY awesome.png /opt/app-root/src/2048/banner.png
+COPY nginx.conf /etc/nginx/nginx.conf</p>
+</div>
+<div class="paragraph">
+<p>EXPOSE 8081</p>
+</div>
+<div class="paragraph">
+<p>ENTRYPOINT ["nginx", "-g", "daemon off;"]
+EOF
+[workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v4 -t 2048-demoday:v4
+&#8230;&#8203;
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED         SIZE
+localhost/2048-demoday              v4          25d1fb487f23  5 seconds ago   382 MB
+quay.io/rhte_2019/2048-demoday      latest      a9a607702567  7 minutes ago   382 MB
+localhost/2048-demoday              v3          a9a607702567  7 minutes ago   382 MB
+localhost/2048-demoday              v2          618f3cb61744  17 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  3 weeks ago     382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  2 months ago    379 MB
+[workshop@rhel9 Dockerfiles]$ podman tag localhost/2048-demoday:v4 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED         SIZE
+localhost/2048-demoday              v4          25d1fb487f23  2 minutes ago   382 MB
+quay.io/rhte_2019/2048-demoday      latest      25d1fb487f23  2 minutes ago   382 MB
+localhost/2048-demoday              v3          a9a607702567  9 minutes ago   382 MB
+localhost/2048-demoday              v2          618f3cb61744  19 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  3 weeks ago     382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  2 months ago    379 MB
+[workshop@rhel9 Dockerfiles]$</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Look for some awesome picture and store it in the Dockerfiles directory as <strong>awesome.png</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Check if there is a new update:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman auto-update --dry-run
+UNIT                     CONTAINER               IMAGE                                  POLICY      UPDATED
+container-httpd.service  c24249c4ee87 (demoday)  quay.io/rhte_2019/2048-demoday:latest  registry    pending
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now you can wait until podman autoupdate automatically updates the image or update it manually, you can choose ;-).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You probably will have to clean your browser&#8217;s cache.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/serverless/2048v4.png" alt="2048v4">
 </div>
 </div>
 </div>
