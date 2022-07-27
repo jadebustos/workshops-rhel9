@@ -27,9 +27,9 @@ This is a new version designed for Edge computing cases which is based in an inm
 == Browse modules
 
 [.tile]
-.xref:01-containers.adoc[Containers]
-* xref:01-containers.adoc#deployingcontainers[Deploying containers]
-** xref:01-containers-rpms.adoc#containerrpms[Installing container tools]
-** xref:01-containers-serverless.adoc#serverless[Deploying Serverless containers]
-** xref:01-containers-podman-autoupdate.adoc#podmanautoupdate[Podman auto-update]
-** xref:01-containers-podman-rollback.adoc#podmanrollback[Performing automatic rollbacks]
+.xref:02-containers.adoc[Containers]
+* xref:02-containers.adoc#deployingcontainers[Deploying containers]
+** xref:02-containers-rpms.adoc#containerrpms[Installing container tools]
+** xref:02-containers-serverless.adoc#serverless[Deploying Serverless containers]
+** xref:02-containers-podman-autoupdate.adoc#podmanautoupdate[Podman auto-update]
+** xref:02-containers-podman-rollback.adoc#podmanrollback[Performing automatic rollbacks]

@@ -1,0 +1,5 @@
+= Installation
+include::_attributes.adoc[]
+
+[#installingrhel]
+== Installing Red Hat Enterprise Linux 9 (RHEL 9)
