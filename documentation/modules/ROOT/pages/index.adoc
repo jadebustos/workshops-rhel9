@@ -27,6 +27,8 @@ This is a new version designed for Edge computing cases which is based in an inm
 == Browse modules
 
 [.tile]
+.xref:01-installation.adoc[Installation]
+* xref:01-installation.adoc#installingrhel
 .xref:02-containers.adoc[Containers]
 * xref:02-containers.adoc#deployingcontainers[Deploying containers]
 ** xref:02-containers-rpms.adoc#containerrpms[Installing container tools]

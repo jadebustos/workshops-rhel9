@@ -1,4 +1,4 @@
-* xref:01-installation.adoc[2. Installation]
+* xref:01-installation.adoc[1. Installation]
 * xref:02-containers.adoc[2. Deploying Containers]
 ** xref:02-containers-rpms.adoc[2.1 Installing container tools]
 ** xref:02-containers-serverless.adoc[2.2 Deploying Serverless containers]
