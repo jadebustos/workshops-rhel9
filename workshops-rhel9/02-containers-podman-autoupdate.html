@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RHEL 9 Workshops</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/02-containers-podman-autoupdate.html">
+    <link rel="prev" href="02-containers-serverless.html">
+    <link rel="next" href="02-containers-podman-rollback.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/course-template">RHEL 9 Workshops</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="workshops-rhel9" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="01-installation.html">2. Installation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-containers.html">2. Deploying Containers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-containers-rpms.html">2.1 Installing container tools</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-containers-serverless.html">2.2 Deploying Serverless containers</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="02-containers-podman-autoupdate.html">2.3 Podman auto-update</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-containers-podman-rollback.html">2.4 Performing automatic rollbacks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">RHEL 9 Workshops</a></li>
+    <li><a href="02-containers.html">2. Deploying Containers</a></li>
+    <li><a href="02-containers-podman-autoupdate.html">2.3 Podman auto-update</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/02-containers-podman-autoupdate.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<div class="sect2">
+<h3 id="podmanautoupdate"><a class="anchor" href="#podmanautoupdate"></a>Podman auto-update</h3>
+<div class="paragraph">
+<p>In this section we are going to see how to automatically update the container image we have just deployed.</p>
+</div>
+<div class="paragraph">
+<p>We need to manage the lifecycle application for the container image, so we will need to update the image according our needs.</p>
+</div>
+<div class="paragraph">
+<p>When deploying multiple devices, for instance in Edge deployments, updating the containers is a challenge. Using <strong>podman auto-update</strong> we can automatically update them with only update the container image in the registry.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_we_will_implement_the_automatic_updates"><a class="anchor" href="#_how_we_will_implement_the_automatic_updates"></a>How we will implement the automatic updates</h3>
+<div class="paragraph">
+<p>We will implement the automatic updates in the following way:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/serverless/podman-autoupdate.png" alt="podman autoupdate">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A systemd timer will be used to periodically look for new versions for the container image in the registry.</p>
+</li>
+<li>
+<p>If a new image is found in the registry podman will download it.</p>
+</li>
+<li>
+<p>The running container image will be updated.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_the_systemd_timer"><a class="anchor" href="#_creating_the_systemd_timer"></a>Creating the systemd timer</h3>
+<div class="paragraph">
+<p>Using the <strong>core</strong> user create the timer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/podman-auto-update.timer
+[Unit]
+Description=Podman auto-update timer
+[Timer]
+# This example runs the podman auto-update daily within a two-hour
+# randomized window to reduce system load
+#OnCalendar=daily
+#Persistent=true
+#RandomizedDelaySec=7200
+# activate every minute
+OnBootSec=30
+OnUnitActiveSec=30
+[Install]
+WantedBy=timers.target
+EOF
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>OnBootSec</strong> tells the timer to start 30 seconds after booting.</p>
+</li>
+<li>
+<p><strong>OnUnitActivateSec</strong> tells the timer to start every 20 seconds after the first timer activation.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can tune these parameters according your needs.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now we will create the unit that will be executed by the above timer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/podman-auto-update.service
+[Unit]
+Description=Podman auto-update service
+Documentation=man:podman-auto-update(1)
+[Service]
+ExecStart=/usr/bin/podman auto-update
+[Install]
+WantedBy=multi-user.target default.target
+EOF
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+We can create an script to perform some more tasks if needed and configure the script within <strong>[Service]</strong> section in <strong>ExecStart</strong>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuring_the_registry_auto_update"><a class="anchor" href="#_configuring_the_registry_auto_update"></a>Configuring the registry auto-update</h3>
+<div class="paragraph">
+<p>Now we have to check the registries that are configured in the system, so as the root user:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# cat /etc/containers/registries.conf
+[registries.search]
+registries = ['quay.io', 'registry.access.redhat.com', 'registry.redhat.io', 'docker.io']
+[registries.insecure]
+registries = ['']
+[registries.block]
+registries = []
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add the registry you will use to upload your container image to the <strong>[registries.search]</strong> section if it is not present.</p>
+</div>
+<div class="paragraph">
+<p>Now as the <strong>core</strong> user we will need to modify the systemd unit which starts the container, we will need to add the following to de <strong>podman run</strong> command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">--label io.containers.autoupdate=registry</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This label tells podman auto-update which containers images can update. As this label is set to <strong>registry</strong> podman auto-update will inspect the images' registry to look for a new image.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can read the man page for <strong>podman-auto-update</strong> to get more information.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>So the unit will be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat .config/systemd/user/container-httpd.service
+# container-f0716002b0458d1720fe6d16264b13c101fa61b11315694c9d016b839ec139a5.service
+# autogenerated by Podman 4.0.2
+# Thu Jun 16 12:50:04 CEST 2022
+[Unit]
+Description=Podman container-f0716002b0458d1720fe6d16264b13c101fa61b11315694c9d016b839ec139a5.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=%t/containers
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/%n.ctr-id
+ExecStart=/usr/bin/podman run --cidfile=%t/%n.ctr-id --cgroups=no-conmon --rm --sdnotify=conmon --replace -d -p 8080:8081 --label io.containers.autoupdate=registry --name demoday quay.io/rhte_2019/2048-demoday:latest
+ExecStop=/usr/bin/podman stop --ignore --cidfile=%t/%n.ctr-id
+ExecStopPost=/usr/bin/podman rm -f --ignore --cidfile=%t/%n.ctr-id
+Type=notify
+NotifyAccess=all
+[Install]
+WantedBy=default.target
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_lets_update_the_application"><a class="anchor" href="#_lets_update_the_application"></a>Lets update the application</h3>
+<div class="paragraph">
+<p>Create a new Dockerfile as the <strong>workshop</strong> user:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF Dockerfile.2048.rhel9.v2
+# buildah build -f Dockerfile.2048.rhel9.v2 -t 2048-demoday:v2
+# podman run --rm -d -p 8080:8081 localhost/2048-demoday:v2
+FROM registry.redhat.io/rhel9/nginx-120
+MAINTAINER ---YOUR NAME--- &lt;YOUR EM@IL&gt;
+COPY 2048 /opt/app-root/src
+COPY index.html /opt/app-root/src/2048
+COPY demoday.png /opt/app-root/src/2048/banner.png
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 8081
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+EOF
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now look for an png image (~ 917x509 pixels) and store it using <strong>demoday.png</strong> as filename and create the image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v2 -t 2048-demoday:v2
+...
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED       SIZE
+localhost/2048-demoday              v2          618f3cb61744  1 second ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  5 hours ago   382 MB
+quay.io/rhte_2019/2048-demoday      latest      d48137cd5225  5 hours ago   382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago   379 MB
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tag the new image as the <strong>latest</strong> and upload it to the registry. Maybe you will need to perform a login in the registry:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ podman tag localhost/2048-demoday:v2 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED        SIZE
+localhost/2048-demoday              v2          618f3cb61744  2 minutes ago  382 MB
+quay.io/rhte_2019/2048-demoday      latest      618f3cb61744  2 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  5 hours ago    382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379 MB
+[workshop@rhel9 Dockerfiles]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To update the container image the container must be running. As we have deployed a serverless application maybe the container is not running.</p>
+</div>
+<div class="paragraph">
+<p>First we are going to check the container images that are present for the <strong>core</strong> user and if there is some container running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED      SIZE
+quay.io/rhte_2019/2048-demoday  latest      d48137cd5225  6 hours ago  382 MB
+[core@rhel9 ~]$ podman ps --all
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As the container is not running we will use the browser to request the application. After that wait a while and you could see something similar to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED         SIZE
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  30 minutes ago  382 MB
+&lt;none&gt;                          &lt;none&gt;      d48137cd5225  6 hours ago     382 MB
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can see that there are two images and the <strong>latest</strong> tag is pointing to a new one. If we compare the <strong>IMAGE ID</strong> with those in the <strong>workshop</strong> user we will see that these are the <strong>IMAGE ID</strong> for the <strong>v1</strong> and <strong>v2</strong> images.</p>
+</div>
+<div class="paragraph">
+<p>If we reload the application in the browser we could see the new version with the banner:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/serverless/2048v2.png" alt="2048v2">
+</div>
+</div>
+<div class="paragraph">
+<p>As we can see the application has been successfully updated.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_homework"><a class="anchor" href="#_homework"></a>Homework</h3>
+<div class="paragraph">
+<p>Improve the auto-update to avoid requesting the application from the browser.</p>
+</div>
+<div class="paragraph">
+<p>Modify the <strong>podman-auto-update.service</strong> to call a script which performs an application request and after that performs the autoupdate.</p>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="02-containers-serverless.html">2.2 Deploying Serverless containers</a></span>
+  <span class="next"><a href="02-containers-podman-rollback.html">2.4 Performing automatic rollbacks</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
