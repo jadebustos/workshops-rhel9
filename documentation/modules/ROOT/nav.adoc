@@ -4,3 +4,6 @@
 ** xref:02-containers-serverless.adoc[2.2 Deploying Serverless containers]
 ** xref:02-containers-podman-autoupdate.adoc[2.3 Podman auto-update]
 ** xref:02-containers-podman-rollback.adoc[2.4 Performing automatic rollbacks]
+* xref:03-builder.adoc[3. Image Builder]
+* xref:04-security.adoc[4. Security]
+* xref:05-edge.adoc[5. Edge Computing with RHEL]

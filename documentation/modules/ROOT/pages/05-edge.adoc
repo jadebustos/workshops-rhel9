@@ -1,0 +1,5 @@
+= Edge Computing with RHEL
+include::_attributes.adoc[]
+
+[#edge]
+== RHEL in the Edge

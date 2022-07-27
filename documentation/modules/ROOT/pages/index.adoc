@@ -35,3 +35,9 @@ This is a new version designed for Edge computing cases which is based in an inm
 ** xref:02-containers-serverless.adoc#serverless[Deploying Serverless containers]
 ** xref:02-containers-podman-autoupdate.adoc#podmanautoupdate[Podman auto-update]
 ** xref:02-containers-podman-rollback.adoc#podmanrollback[Performing automatic rollbacks]
+.xref:03-builder.adoc[Image Builder]
+* xref:03-builder.adoc#imagebuilder
+.xref:04-security.adoc[Security]
+* xref:03-security.adoc#security
+.xref:05-edge.adoc[Edge Computing with RHEL]
+* xref:05-edge.adoc#edge
