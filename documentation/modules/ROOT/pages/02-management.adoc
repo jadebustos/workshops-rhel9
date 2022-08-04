@@ -1,4 +1,4 @@
-= RHEL Management
+= RHEL Management [[rhel_management]]
 include::_attributes.adoc[]
 
 [#rhelmanagement]
@@ -66,3 +66,44 @@ image::cockpit/login.png[]
 Use the root user to login and you can see the dashboard:
 
 image::cockpit/dashboard.png[]
+
+To the left you can see the **cockpit** installed modules, known as **add-ons**:
+
+image::cockpit/add-ons.png[]
+
+You can get the available **add-ons**:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# dnf search cockpit-*
+Actualización de repositorios de Subscription Management.
+Última comprobación de caducidad de metadatos hecha hace 0:01:20, el jue 04 ago 2022 13:46:07.
+============================================================================= Coincidencia en Nombre: cockpit-* ==============================================================================
+cockpit-bridge.x86_64 : Cockpit bridge server-side component
+cockpit-composer.noarch : Composer GUI for use with Cockpit
+cockpit-doc.noarch : Cockpit deployment and developer guide
+cockpit-machines.noarch : Cockpit user interface for virtual machines
+cockpit-packagekit.noarch : Cockpit user interface for packages
+cockpit-pcp.x86_64 : Cockpit PCP integration
+cockpit-podman.noarch : Cockpit component for Podman containers
+cockpit-session-recording.noarch : Cockpit Session Recording
+cockpit-storaged.noarch : Cockpit user interface for storage, using udisks
+cockpit-system.noarch : Cockpit admin interface package for configuring and troubleshooting a system
+cockpit-ws.x86_64 : Cockpit Web Service
+[root@rhel9 ~]#
+
+To install an **add-on** you only need to install it:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# dnf install cockpit-session-recording -y
+...
+[root@rhel9 ~]#
+
+Reload your browser:
+
+image::cockpit/session-recording.png[]
+
+TIP: Browse the **add-ons** and install those you find useful.
+
+NOTE: For more information you can check the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/index[official documentation].
+
+TIP: Not only can you manage your RHEL from cockit but you can manage other RHELs from that **cockit** https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/managing-remote-systems-in-the-web-console_system-management-using-the-rhel-9-web-console[Managing remote systems in the web console].

@@ -3,3 +3,5 @@ include::_attributes.adoc[]
 
 [#imagebuilder]
 == Create RHEL images to deploy everywhere
+
+**Cockpit** needs to be installed and running. It **cockpit** is not installed check <<rhel_management>>.
