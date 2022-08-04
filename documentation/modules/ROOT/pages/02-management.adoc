@@ -1,4 +1,4 @@
-= RHEL Management [[rhel_management]]
+= RHEL Management
 include::_attributes.adoc[]
 
 [#rhelmanagement]
@@ -103,6 +103,10 @@ Reload your browser:
 image::cockpit/session-recording.png[]
 
 TIP: Browse the **add-ons** and install those you find useful.
+
+For instance:
+
+image::cockpit/network.png[scaledwidth="45%",scaledheight="45%"]
 
 NOTE: For more information you can check the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/index[official documentation].
 
