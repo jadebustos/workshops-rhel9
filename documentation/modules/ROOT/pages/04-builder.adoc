@@ -81,3 +81,11 @@ image::builder/11-create-blueprint.png[]
 It will take a while to create the image:
 
 image::builder/12-create-blueprint.png[]
+
+After completion:
+
+image::builder/13-create-blueprint.png[]
+
+From GUI we can download the image file:
+
+image::builder/14-create-blueprint.png[]

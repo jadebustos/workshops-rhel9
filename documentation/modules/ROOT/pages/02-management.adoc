@@ -110,4 +110,4 @@ image::cockpit/network.png[]
 
 NOTE: For more information you can check the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/index[official documentation].
 
-TIP: Not only can you manage your RHEL from cockit but you can manage other RHELs from that **cockit** https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/managing-remote-systems-in-the-web-console_system-management-using-the-rhel-9-web-console[Managing remote systems in the web console].
+TIP: Not only can you manage your RHEL from **cockpit** but you can manage other RHELs from that **cockpit** https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/managing-remote-systems-in-the-web-console_system-management-using-the-rhel-9-web-console[Managing remote systems in the web console].
