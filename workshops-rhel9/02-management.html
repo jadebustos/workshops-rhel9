@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Installation :: RHEL 9 Workshops</title>
-    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/01-installation.html">
-    <link rel="prev" href="index.html">
-    <link rel="next" href="02-management.html">
+    <title>RHEL Management :: RHEL 9 Workshops</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/02-management.html">
+    <link rel="prev" href="01-installation.html">
+    <link rel="next" href="03-containers.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -51,10 +51,10 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="01-installation.html">1. Installation</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="02-management.html">2. RHEL Management</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -99,23 +99,131 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">RHEL 9 Workshops</a></li>
-    <li><a href="01-installation.html">1. Installation</a></li>
+    <li><a href="02-management.html">2. RHEL Management</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/01-installation.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/02-management.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Installation</h1>
+<h1 class="page">RHEL Management</h1>
 <div class="sect1">
-<h2 id="installingrhel"><a class="anchor" href="#installingrhel"></a>Installing Red Hat Enterprise Linux 9 (RHEL 9)</h2>
+<h2 id="rhelmanagement"><a class="anchor" href="#rhelmanagement"></a>RHEL Management with cockpit</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>RHEL includes a graphical tool for management. It is named <strong>cockpit</strong>.</p>
+</div>
+<div class="paragraph">
+<p>This tool is modular so you will have to install <strong>cockpit</strong> and after that you will need to install the modules for the admin tasks you want to perform:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Users management</p>
+</li>
+<li>
+<p>Software management</p>
+</li>
+<li>
+<p>Storage management</p>
+</li>
+<li>
+<p>Virtual machines management</p>
+</li>
+<li>
+<p>Session recording</p>
+</li>
+<li>
+<p>&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installingcockpit"><a class="anchor" href="#installingcockpit"></a>Installing cockpit</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To install software the RHEL 9 machine need to have access to RHEL repositories, so check that you have access to them:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf repolist
+Updating Subscription Management repositories.
+repo id                                                                            repo name
+rhel-9-for-x86_64-appstream-rpms                                                   Red Hat Enterprise Linux 9 for x86_64 - AppStream (RPMs)
+rhel-9-for-x86_64-baseos-rpms                                                      Red Hat Enterprise Linux 9 for x86_64 - BaseOS (RPMs)
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To install <strong>cockpit</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf install cockpit -y
+...
+[root@rhel9 ~]# systemctl enable --now cockpit.socket
+Created symlink /etc/systemd/system/sockets.target.wants/cockpit.socket → /usr/lib/systemd/system/cockpit.socket.
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Check the official documentation for your RHEL version to get how cockpit is installed. The procedure may change between versions. <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/managing_systems_using_the_rhel_9_web_console/index#installing-the-web-console_getting-started-with-the-rhel-9-web-console">How to install Cockpit</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To access the <strong>cockpit</strong> service you will need to open de <strong>9090/tcp</strong> port. This port should be opened during <strong>cockpit</strong> installation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# firewall-cmd --list-all
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: enp1s0
+  sources:
+  services: cockpit dhcpv6-client ssh
+  ports: 8080-8083/tcp
+  protocols:
+  forward: yes
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see the service <strong>cockpit</strong> is opened you can access the service through <a href="https://&lt;your" class="bare">https://&lt;your</a> rhel 9 ip&gt;:9090 using a web browser:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cockpit/login.png" alt="login">
+</div>
+</div>
+<div class="paragraph">
+<p>Use the root user to login and you can see the dashboard:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cockpit/dashboard.png" alt="dashboard">
+</div>
+</div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="index.html">RHEL 9 Workshops</a></span>
-  <span class="next"><a href="02-management.html">2. RHEL Management</a></span>
+  <span class="prev"><a href="01-installation.html">1. Installation</a></span>
+  <span class="next"><a href="03-containers.html">3. Deploying Containers</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RHEL 9 Workshops</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/03-containers-serverless.html">
+    <link rel="prev" href="03-containers-rpms.html">
+    <link rel="next" href="03-containers-podman-autoupdate.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/course-template">RHEL 9 Workshops</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="workshops-rhel9" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="01-installation.html">1. Installation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="02-management.html">2. RHEL Management</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-containers.html">3. Deploying Containers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-containers-rpms.html">3.1 Installing container tools</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="03-containers-serverless.html">3.2 Deploying Serverless containers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-containers-podman-autoupdate.html">3.3 Podman auto-update</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-containers-podman-rollback.html">3.4 Performing automatic rollbacks</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="04-builder.html">4. Image Builder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="05-security.html">5. Security</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="06-edge.html">6. Edge Computing with RHEL</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">RHEL 9 Workshops</a></li>
+    <li><a href="03-containers.html">3. Deploying Containers</a></li>
+    <li><a href="03-containers-serverless.html">3.2 Deploying Serverless containers</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/03-containers-serverless.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<div class="sect2">
+<h3 id="serverless"><a class="anchor" href="#serverless"></a>Enabling user services run whether user logged in or not</h3>
+<div class="paragraph">
+<p>We are going to deploy the container as an unprivileged user (e.g. rootless).</p>
+</div>
+<div class="paragraph">
+<p>As we need to use systemd to run the container we will need that these units we are going to use can be executed every time a request is received.</p>
+</div>
+<div class="paragraph">
+<p>When systemd units are used by non-root user are only started when the user starts a session and they are terminated when the user closes the session. Obviously this is not the behaviour we want to run an application.</p>
+</div>
+<div class="paragraph">
+<p>As we are going to use the user <strong>core</strong> to run the Serverless container we need to allow this user services run whether core user is logged or not:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# cat &lt;&lt; EOF &gt; /etc/systemd/system/enable-linger.service
+### Editing /etc/systemd/system/enable-linger.service.d/override.conf
+### Anything between here and the comment below will become the new contents of the file
+[Service]
+Type=oneshot
+ExecStart=loginctl enable-linger core
+[Install]
+WantedBy=multi-user.target default.target
+### Lines below this comment will be discarded
+EOF
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_the_containerized_application"><a class="anchor" href="#_building_the_containerized_application"></a>Building the containerized application</h3>
+<div class="paragraph">
+<p>We will use the following application: <a href="https://github.com/alexwhen/docker-2048">2048 game</a>.</p>
+</div>
+<div class="paragraph">
+<p>You can use your own computer or the RHEL 9 server to build it. If you use the RHEL 9 server use a different user that the <strong>core</strong> user.</p>
+</div>
+<div class="paragraph">
+<p>In this case we will use the RHEL 9 server and we build the container image using the <strong>workshop</strong> user.</p>
+</div>
+<div class="paragraph">
+<p>You will need to clone the repository:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 ~]$ mkdir Dockerfiles
+[workshop@rhel9 Dockerfiles]$ cd Dockerfiles
+[workshop@rhel9 Dockerfiles]$ <a href="https://github.com/alexwhen/docker-2048.git" class="bare">https://github.com/alexwhen/docker-2048.git</a>
+[workshop@rhel9 Dockerfiles]$ ln -s docker-2048/ 2048</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As this is a web application and we will use nginx we will need the nginx configuration file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF nginx.conf
+worker_processes  1;
+include /usr/share/nginx/modules/*.conf;
+events {
+    worker_connections 1024;
+}
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+    access_log  /var/log/nginx/access.log  main;
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 4096;
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See <a href="http://nginx.org/en/docs/ngx_core_module.html#include" class="bare">http://nginx.org/en/docs/ngx_core_module.html#include</a>
+    # for more information.
+    include /opt/app-root/etc/nginx.d/*.conf;
+    server {
+        listen       8081;
+        server_name  localhost;
+        root         /opt/app-root/src;
+        # Load configuration files for the default server block.
+        include /opt/app-root/etc/nginx.default.d/*.conf;
+        location / {
+            include /etc/nginx/mime.types;
+            root   /opt/app-root/src/2048;
+            index  index.html;
+        }
+    }
+EOF
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we are going to create the image container. We will write the following Dockerfile:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF Dockerfile.2048.rhel9.v1
+# buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v1
+# podman run --rm -d -p 8080:8081 localhost/2048-demoday:v1
+FROM registry.redhat.io/rhel9/nginx-120
+MAINTAINER ---YOUR NAME--- &lt;YOUR EM@IL&gt;
+COPY 2048 /opt/app-root/src
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 8081
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+EOF
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+We are using an image with nginx provided by Red Hat. If you do not have access to Red Hat images you can look for a different image but in this case you probably need to modify the Dockerfile because the application source code could change its location and the nginx configuration file as well.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you are using the Red Hat container image you will need to login to Red Hat&#8217;s registry:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ podman login registry.redhat.io
+Username: &lt;YOUR RED HAT USER HERE&gt;
+Password: &lt;YOUR PASSWORD HERE&gt;
+Login Succeeded
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now to build the container image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v1
+...
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED        SIZE
+localhost/2048-demoday              v1          d48137cd5225  5 seconds ago  382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379 MB
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we will have to upload the image to one registry. We will use <a href="https://quay.io">Quay</a> but you can use a different one. As we are going to upload the image we need to login:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ podman login quay.io
+Username: &lt;YOUR REGISTRY USER HERE&gt;
+Password: &lt;YOUR PASSWORD HERE&gt;
+Login Succeeded
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We need to tag the image and upload it to the registry, so you will need to change the following according your registry and account:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ podman tag localhost/2048-demoday:v1 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED        SIZE
+localhost/2048-demoday              v1          d48137cd5225  9 minutes ago  382 MB
+quay.io/rhte_2019/2048-demoday      latest      d48137cd5225  9 minutes ago  382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379 MB
+[workshop@rhel9 Dockerfiles]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now the image is ready to be deployed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_serverless_containers"><a class="anchor" href="#_deploying_serverless_containers"></a>Deploying Serverless containers</h3>
+<div class="paragraph">
+<p>Serverless containers are containers that are started when requests are received and the container will be stopped when no requests are received.</p>
+</div>
+<div class="paragraph">
+<p>This is how the serverless application will work:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/serverless/podman-serverless.png" alt="podman serverless">
+</div>
+</div>
+<div class="paragraph">
+<p>The first time the container image is executed it will be downloaded from the registry. So we will create a systemd unit that will downloaded the image from the registry when the server boots to reduce the response time in the first application request.</p>
+</div>
+<div class="paragraph">
+<p>So as the <strong>core</strong> user we will create the directories where the systemd units will be created:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ mkdir -p .config/systemd/user
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we will create the systemd unit to download the image from the registry to the server:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/pre-pull-container-image.service
+[Service]
+Type=oneshot
+ExecStart=podman pull quay.io/rhte_2019/2048-demoday:latest
+RestartSec=30
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target default.target
+EOF
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Replace the image for your own&#8217;s one.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As we are going to expose the application to the world we will need create a systemd socket. We will use the port 8080 to expose the application to the world so we will create the socket:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/container-httpd-proxy.socket
+[Socket]
+ListenStream=192.168.1.144:8080
+FreeBind=true
+[Install]
+WantedBy=sockets.target
+EOF
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Replace the 192.168.1.144 IP for your server&#8217;s one.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As root user we will open the 8080 port:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# firewall-cmd --permanent --add-port=8080/tcp
+success
+[root@rhel9 ~]# firewall-cmd --reload
+success
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we will create a proxy socket that will start the container and will forward the requests from the 8080 port to the container:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/container-httpd-proxy.service
+[Unit]
+Requires=container-httpd.service
+After=container-httpd.service
+Requires=container-httpd-proxy.socket
+After=container-httpd-proxy.socket
+[Service]
+ExecStart=/usr/lib/systemd/systemd-socket-proxyd --exit-idle-time=10 127.0.0.1:8080
+EOF
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Adjust <strong>--exit-idle-time</strong> as you prefer. This  parameter is used to stop the container after this inactivity time, in this case 10 seconds. Bare in mind that although you are not sending requests to the application maybe the application itself is sending some traffic. That means that it could take a bit more time than 10 seconds to stop the application. This application takes one minute or so to be stopped. You can check the man page for <strong>systemd-socket-proxy</strong> to get more information.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>It is a good idea to use podman to create the unit that will start the container. For that under the user <strong>workshop</strong> where we create the container image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 ~]$ podman run --rm -d -p 8080:8081 --name demoday localhost/2048-demoday:v1
+f0716002b0458d1720fe6d16264b13c101fa61b11315694c9d016b839ec139a5
+[workshop@rhel9 ~]$ podman generate systemd --new demoday &gt; container-httpd.service
+[workshop@rhel9 ~]$ podman stop demoday
+demoday
+[workshop@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Remember that the container exposes the 8081 port.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now we need to copy the file <strong>container-httpd.service</strong> to the directory <strong>.config/systemd/user</strong> under the user&#8217;s <strong>core</strong> home directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat .config/systemd/user/container-httpd.service
+# container-f0716002b0458d1720fe6d16264b13c101fa61b11315694c9d016b839ec139a5.service
+# autogenerated by Podman 4.0.2
+# Thu Jun 16 12:50:04 CEST 2022
+[Unit]
+Description=Podman container-f0716002b0458d1720fe6d16264b13c101fa61b11315694c9d016b839ec139a5.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=%t/containers
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/%n.ctr-id
+ExecStart=/usr/bin/podman run --cidfile=%t/%n.ctr-id --cgroups=no-conmon --rm --sdnotify=conmon --replace -d -p 8080:8081 --name demoday quay.io/rhte_2019/2048-demoday:latest
+ExecStop=/usr/bin/podman stop --ignore --cidfile=%t/%n.ctr-id
+ExecStopPost=/usr/bin/podman rm -f --ignore --cidfile=%t/%n.ctr-id
+Type=notify
+NotifyAccess=all
+[Install]
+WantedBy=default.target
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We are almost done, but we need some additional configuration.</p>
+</div>
+<div class="paragraph">
+<p>We have configured the proxy socket to stop the container after 10 seconds of inactivity so we must configure the systemd unit as well. For that in the <strong>container-httpd.service</strong> we have to add to the <strong>[Unit]</strong> service the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">StopWhenUnneeded=true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now you can reboot the server.</p>
+</div>
+<div class="paragraph">
+<p>After the server boots, connect to the server using the <strong>core</strong> user. Wait a bit and check that the container image has been downloaded:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED      SIZE
+quay.io/rhte_2019/2048-demoday  latest      d48137cd5225  3 hours ago  382 MB
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can check that the <strong>IMAGE ID</strong> is the same that the image that was created under the <strong>workshop</strong> user and uploaded to the registry.</p>
+</div>
+<div class="paragraph">
+<p>Check that there is no container running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman ps
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we are going to check that there is a bind socket in the 8080 port:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ netstat -tunlp
+(Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.)
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 192.168.1.144:8080      0.0.0.0:*               LISTEN      743/systemd
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+tcp6       0      0 :::22                   :::*                    LISTEN      -
+udp        0      0 127.0.0.1:323           0.0.0.0:*                           -
+udp6       0      0 ::1:323                 :::*                                -
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As we can see <strong>systemd</strong> is listening in the 8080 port.</p>
+</div>
+<div class="paragraph">
+<p>Access the application using a browser:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/serverless/2048v1.png" alt="2048v1">
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can see that the container has been started:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman ps
+CONTAINER ID  IMAGE                                  COMMAND     CREATED         STATUS             PORTS                     NAMES
+98682e2c7b05  quay.io/rhte_2019/2048-demoday:latest              14 seconds ago  Up 15 seconds ago  127.0.0.1:8080-&gt;8081/tcp  demoday
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Stop playing the game and wait a minute or so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman ps
+CONTAINER ID  IMAGE                                  COMMAND     CREATED         STATUS             PORTS                     NAMES
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So after a period of inactivity the container is stopped.</p>
+</div>
+<div class="paragraph">
+<p>Access the application again and check that the container is started and it stops after an inactivity time.</p>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="03-containers-rpms.html">3.1 Installing container tools</a></span>
+  <span class="next"><a href="03-containers-podman-autoupdate.html">3.3 Podman auto-update</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

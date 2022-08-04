@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RHEL 9 Workshops</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/03-containers-podman-rollback.html">
+    <link rel="prev" href="03-containers-podman-autoupdate.html">
+    <link rel="next" href="04-builder.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/course-template">RHEL 9 Workshops</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="workshops-rhel9" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="01-installation.html">1. Installation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="02-management.html">2. RHEL Management</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-containers.html">3. Deploying Containers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-containers-rpms.html">3.1 Installing container tools</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-containers-serverless.html">3.2 Deploying Serverless containers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-containers-podman-autoupdate.html">3.3 Podman auto-update</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="03-containers-podman-rollback.html">3.4 Performing automatic rollbacks</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="04-builder.html">4. Image Builder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="05-security.html">5. Security</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="06-edge.html">6. Edge Computing with RHEL</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">RHEL 9 Workshops</a></li>
+    <li><a href="03-containers.html">3. Deploying Containers</a></li>
+    <li><a href="03-containers-podman-rollback.html">3.4 Performing automatic rollbacks</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/03-containers-podman-rollback.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<div class="sect2">
+<h3 id="podmanrollback"><a class="anchor" href="#podmanrollback"></a>Performing automatic rollbacks</h3>
+<div class="paragraph">
+<p>As podman is able to perform automatic rollbacks if there is some problem with the update automatic rollbacks are needed as well.</p>
+</div>
+<div class="paragraph">
+<p>Podman will check the new downloaded container image and if the new container image does not work an automatic rollback will be performed to the previous working container image</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_we_will_implement_the_automatic_rollback"><a class="anchor" href="#_how_we_will_implement_the_automatic_rollback"></a>How we will implement the automatic rollback</h3>
+<div class="paragraph">
+<p>We will implement the automatic rollback in the following way:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/serverless/podman-autoupdate-rollback.png" alt="podman autoupdate rollback">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>After the container image has been downloaded podman will check that the container image starts successfully.</p>
+</li>
+<li>
+<p>If not, podman will automatically rollback to the previous working container image.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_a_faulty_image"><a class="anchor" href="#_creating_a_faulty_image"></a>Creating a faulty image</h3>
+<div class="paragraph">
+<p>We will create a faulty image. So create a new Dockerfile as the <strong>workshop</strong> user:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF Dockerfile.2048.rhel9.v3
+# buildah build -f Dockerfile.2048.rhel9.v3 -t 2048-demoday:v3
+# podman run --rm -d -p 8080:8081 localhost/2048-demoday:v3
+FROM registry.redhat.io/rhel9/nginx-120
+MAINTAINER ---YOUR NAME--- &lt;YOUR EM@IL&gt;
+COPY 2048 /opt/app-root/src
+EXPOSE 8081
+ENTRYPOINT ["exit", "255"]
+EOF
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We build the container image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v3 -t 2048-demoday:v3
+...
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED       SIZE
+localhost/2048-demoday              v3          a9a607702567  3 seconds ago  382 MB
+localhost/2048-demoday              v2          618f3cb61744  10 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  5 hours ago   382 MB
+quay.io/rhte_2019/2048-demoday      latest      d48137cd5225  5 hours ago   382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago   379 MB
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_performing_the_rollback_automatically"><a class="anchor" href="#_performing_the_rollback_automatically"></a>Performing the rollback automatically</h3>
+<div class="paragraph">
+<p>Tag the new image as the <strong>latest</strong> and upload it to the registry. Maybe you will need to perform a login in the registry:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ podman tag localhost/2048-demoday:v3 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED        SIZE
+localhost/2048-demoday              v3          a9a607702567  58 seconds ago  382 MB
+quay.io/rhte_2019/2048-demoday      latest      a9a607702567  58 seconds ago  382 MB
+localhost/2048-demoday              v2          618f3cb61744  10 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  5 hours ago    382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379 MB
+[workshop@rhel9 Dockerfiles]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To update the container image the container must be running. As we have deployed a serverless application maybe the container is not running.</p>
+</div>
+<div class="paragraph">
+<p>First we are going to check the container images that are present for the <strong>core</strong> user and if there is some container running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman ps
+CONTAINER ID  IMAGE                                  COMMAND     CREATED         STATUS             PORTS                     NAMES
+3b6c286c3cf8  quay.io/rhte_2019/2048-demoday:latest              24 seconds ago  Up 25 seconds ago  127.0.0.1:8080-&gt;8081/tcp  demoday
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We see that the container is running. After a while the container image will be updated:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED         SIZE
+&lt;none&gt;                          &lt;none&gt;      a9a607702567  15 minutes ago  382 MB
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago     382 MB
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can see that the latest is pointing to the <strong>IMAGE ID</strong> for the v2 version and the image tagged as <strong>&lt;none&gt;</strong> is pointing to the v3 version (the faulty one). So podman has updated the image automatically as the image is a faulty one has performed an automatic rollback to the last working image.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_performing_the_rollback_manually"><a class="anchor" href="#_performing_the_rollback_manually"></a>Performing the rollback manually</h3>
+<div class="paragraph">
+<p>We are going to restore the v2 image as the latest in the repository just to perform the upgrade manually:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 ~]$ podman tag localhost/2048-demoday:v2 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 ~]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the v2 version is uploaded as the <strong>latest</strong> version to the repository we are going to check manually if there is some updates available for the container:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman auto-update --dry-run
+UNIT                     CONTAINER               IMAGE                                  POLICY      UPDATED
+container-httpd.service  86566938f37c (demoday)  quay.io/rhte_2019/2048-demoday:latest  registry    false
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The container has to be running. If the container is not running send some requests to the application using a browser.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We are going to delete the previous faulty image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED         SIZE
+&lt;none&gt;                          &lt;none&gt;      a9a607702567  55 minutes ago  382 MB
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago     382 MB
+[core@rhel9 ~]$ podman rmi a9a607702567
+Deleted: a9a607702567b6f8f881d71b50a66ff8ca85bba73deb35ba982285c4c2ec2cbd
+[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED      SIZE
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago  382 MB
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We upload the faulty image as <strong>latest</strong> again:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 ~]$ podman tag localhost/2048-demoday:v3 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 ~]$ podman push quay.io/rhte_2019/2048-demoday:latest
+...
+[workshop@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We perform a simulation for the update:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman auto-update --dry-run
+UNIT                     CONTAINER               IMAGE                                  POLICY      UPDATED
+container-httpd.service  59a7926a388c (demoday)  quay.io/rhte_2019/2048-demoday:latest  registry    pending
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Remember that the container has to be running.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We can see that there is pending update. We perform the update manually:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman auto-update
+Trying to pull quay.io/rhte_2019/2048-demoday:latest...
+Getting image source signatures
+Copying blob ef04b8788421 skipped: already exists
+Copying blob 615933f54d5e skipped: already exists
+Copying blob 25ad9a06c050 skipped: already exists
+Copying blob be6104f7629e skipped: already exists
+Copying blob 3e71e5f07102 done
+Copying config a9a6077025 done
+Writing manifest to image destination
+Storing signatures
+UNIT                     CONTAINER               IMAGE                                  POLICY      UPDATED
+container-httpd.service  59a7926a388c (demoday)  quay.io/rhte_2019/2048-demoday:latest  registry    rolled back
+[core@rhel9 ~]$ podman images
+REPOSITORY                      TAG         IMAGE ID      CREATED            SIZE
+&lt;none&gt;                          &lt;none&gt;      a9a607702567  About an hour ago  382 MB
+quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago        382 MB
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As we can see the faulty images was downloaded as it is a faulty one a rollback was automatically performed to the last working image.</p>
+</div>
+<div class="paragraph">
+<p>Now we are going to build a new container image to perform the update simulating fixing the v3 container image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF Dockerfile.2048.rhel9.v4
+# buildah build -f Dockerfile.2048.rhel9.v4 -t 2048-demoday:v4
+# podman run --rm -d -p 8080:8081 localhost/2048-demoday:v4
+FROM registry.redhat.io/rhel9/nginx-120
+MAINTAINER ---YOUR NAME--- &lt;YOUR EM@IL&gt;
+COPY 2048 /opt/app-root/src
+COPY index.html /opt/app-root/src/2048
+COPY awesome.png /opt/app-root/src/2048/banner.png
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 8081
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+EOF
+[workshop@rhel9 Dockerfiles]$ buildah build -f Dockerfile.2048.rhel9.v4 -t 2048-demoday:v4
+...
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED         SIZE
+localhost/2048-demoday              v4          25d1fb487f23  5 seconds ago   382 MB
+quay.io/rhte_2019/2048-demoday      latest      a9a607702567  7 minutes ago   382 MB
+localhost/2048-demoday              v3          a9a607702567  7 minutes ago   382 MB
+localhost/2048-demoday              v2          618f3cb61744  17 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  3 weeks ago     382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  2 months ago    379 MB
+[workshop@rhel9 Dockerfiles]$ podman tag localhost/2048-demoday:v4 quay.io/rhte_2019/2048-demoday:latest
+[workshop@rhel9 Dockerfiles]$ podman images
+REPOSITORY                          TAG         IMAGE ID      CREATED         SIZE
+localhost/2048-demoday              v4          25d1fb487f23  2 minutes ago   382 MB
+quay.io/rhte_2019/2048-demoday      latest      25d1fb487f23  2 minutes ago   382 MB
+localhost/2048-demoday              v3          a9a607702567  9 minutes ago   382 MB
+localhost/2048-demoday              v2          618f3cb61744  19 minutes ago  382 MB
+localhost/2048-demoday              v1          d48137cd5225  3 weeks ago     382 MB
+registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  2 months ago    379 MB
+[workshop@rhel9 Dockerfiles]$</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Look for some awesome picture and store it in the Dockerfiles directory as <strong>awesome.png</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Check if there is a new update:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ podman auto-update --dry-run
+UNIT                     CONTAINER               IMAGE                                  POLICY      UPDATED
+container-httpd.service  c24249c4ee87 (demoday)  quay.io/rhte_2019/2048-demoday:latest  registry    pending
+[core@rhel9 ~]$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now you can wait until podman autoupdate automatically updates the image or update it manually, you can choose ;-).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You probably will have to clean your browser&#8217;s cache.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/serverless/2048v4.png" alt="2048v4">
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="03-containers-podman-autoupdate.html">3.3 Podman auto-update</a></span>
+  <span class="next"><a href="04-builder.html">4. Image Builder</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
