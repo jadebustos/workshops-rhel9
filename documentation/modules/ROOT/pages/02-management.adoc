@@ -69,7 +69,7 @@ image::cockpit/dashboard.png[]
 
 To the left you can see the **cockpit** installed modules, known as **add-ons**:
 
-image::cockpit/add-ons.png[]
+image::cockpit/add-ons.png[width="45%",height="45%"]
 
 You can get the available **add-ons**:
 
@@ -106,7 +106,7 @@ TIP: Browse the **add-ons** and install those you find useful.
 
 For instance:
 
-image::cockpit/network.png[width="45%",height="45%"]
+image::cockpit/network.png[]
 
 NOTE: For more information you can check the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/index[official documentation].
 

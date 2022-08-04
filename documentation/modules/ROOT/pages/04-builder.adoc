@@ -11,4 +11,10 @@ To create RHEL images we will use **image builder**.
 [#installingbuilder]
 == Installing image builder
 
-To install **image builder** we will install the cockpit add-on
+To install **image builder** we will install the cockpit add-on:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# dnf install osbuild-composer composer-cli cockpit-composer bash-completion -y
+...
+[root@rhel9 ~]# systemctl enable --now osbuild-composer.socket
+[root@rhel9 ~]#
