@@ -122,7 +122,15 @@
 <h2 id="installingbuilder"><a class="anchor" href="#installingbuilder"></a>Installing image builder</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To install <strong>image builder</strong> we will install the cockpit add-on</p>
+<p>To install <strong>image builder</strong> we will install the cockpit add-on:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf install osbuild-composer composer-cli cockpit-composer bash-completion -y
+...
+[root@rhel9 ~]# systemctl enable --now osbuild-composer.socket
+[root@rhel9 ~]#</code></pre>
+</div>
 </div>
 </div>
 </div>
