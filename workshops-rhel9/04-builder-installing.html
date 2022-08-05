@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Installation :: RHEL 9 Workshops</title>
-    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/01-installation.html">
-    <link rel="prev" href="index.html">
-    <link rel="next" href="02-management.html">
+    <title>Untitled :: RHEL 9 Workshops</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/04-builder-installing.html">
+    <link rel="prev" href="04-builder.html">
+    <link rel="next" href="04-builder-blueprints.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -51,7 +51,7 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="01-installation.html">1. Installation</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -85,7 +85,7 @@
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="04-builder.html">4. Image Builder</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="04-builder-installing.html">4.1 Installing Image Builder</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -114,23 +114,41 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">RHEL 9 Workshops</a></li>
-    <li><a href="01-installation.html">1. Installation</a></li>
+    <li><a href="04-builder.html">4. Image Builder</a></li>
+    <li><a href="04-builder-installing.html">4.1 Installing Image Builder</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/01-installation.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/04-builder-installing.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Installation</h1>
 <div class="sect1">
-<h2 id="installingrhel"><a class="anchor" href="#installingrhel"></a>Installing Red Hat Enterprise Linux 9 (RHEL 9)</h2>
+<h2 id="installingbuilder"><a class="anchor" href="#installingbuilder"></a>Installing Image Nuilder</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>To install <strong>Image Builder</strong> we will install the cockpit add-on:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf install osbuild-composer composer-cli cockpit-composer bash-completion -y
+...
+[root@rhel9 ~]# systemctl enable --now osbuild-composer.socket
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Reload your browser:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/builder/builder.png" alt="builder">
+</div>
+</div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="index.html">RHEL 9 Workshops</a></span>
-  <span class="next"><a href="02-management.html">2. RHEL Management</a></span>
+  <span class="prev"><a href="04-builder.html">4. Image Builder</a></span>
+  <span class="next"><a href="04-builder-blueprints.html">4.2 Blueprints</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

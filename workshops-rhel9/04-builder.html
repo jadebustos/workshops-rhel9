@@ -6,7 +6,7 @@
     <title>Image Builder :: RHEL 9 Workshops</title>
     <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/04-builder.html">
     <link rel="prev" href="03-containers-podman-rollback.html">
-    <link rel="next" href="05-security.html">
+    <link rel="next" href="04-builder-installing.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -55,7 +55,13 @@
     <a class="nav-link" href="01-installation.html">1. Installation</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="02-management.html">2. RHEL Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-management.html">2.1 Installing Cockpit</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -65,7 +71,7 @@
     <a class="nav-link" href="03-containers-rpms.html">3.1 Installing container tools</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-containers-serverless.html">3.2 Deploying Serverless containers</a>
+    <a class="nav-link" href="03-containers-serverless.html">3.2 Deploying Serverless Containers</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="03-containers-podman-autoupdate.html">3.3 Podman auto-update</a>
@@ -76,7 +82,16 @@
 </ul>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="04-builder.html">4. Image Builder</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-builder-installing.html">4.1 Installing Image Builder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-builder-blueprints.html">4.2 Blueprints</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="05-security.html">5. Security</a>
@@ -118,169 +133,9 @@
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="installingbuilder"><a class="anchor" href="#installingbuilder"></a>Installing image builder</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To install <strong>image builder</strong> we will install the cockpit add-on:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf install osbuild-composer composer-cli cockpit-composer bash-completion -y
-...
-[root@rhel9 ~]# systemctl enable --now osbuild-composer.socket
-[root@rhel9 ~]#</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Reload your browser:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/builder.png" alt="builder">
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="blueprints"><a class="anchor" href="#blueprints"></a>Blueprints</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Before deploying an image we need to define the image, the content, &#8230;&#8203; this is named <strong>blueprint</strong>.</p>
-</div>
-<div class="paragraph">
-<p>Clicking in <strong>blueprint</strong> we will be asked for a name and description for the image:..</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/01-create-blueprint.png" alt="01 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>After creation we could add the packages we want to be installed in the image:..</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/02-create-blueprint.png" alt="02 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>Select all the packages you want to install and press <strong>Commit</strong>:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/03-create-blueprint.png" alt="03 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>After confirming the <strong>commit</strong> operation:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/04-create-blueprint.png" alt="04 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>Now you can create the image clicking on <strong>Create image</strong> but if we click on the <strong>image name</strong>:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/05-create-blueprint.png" alt="05 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>we can customize the image:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/06-create-blueprint.png" alt="06 create blueprint">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>We can configure the hostname.</p>
-</li>
-<li>
-<p>We can configure the device where the image will be installed (if neeeed).</p>
-</li>
-<li>
-<p>We can create users.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>If we click on <strong>Create user account</strong>:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/07-create-blueprint.png" alt="07 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>Now we have created an user within the image:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/08-create-blueprint.png" alt="08 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>We can create as many as needed.</p>
-</div>
-<div class="paragraph">
-<p>To create the image we can go to the <strong>Images</strong> tab and click on <strong>Create image</strong>:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/09-create-blueprint.png" alt="09 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>Now we can select the format of the image. So we can create an iso installer, an Amazon Image, an image for vSphere, OpenStack, &#8230;&#8203;</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/10-create-blueprint.png" alt="10 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>After selecting the format click on <strong>Create</strong> to create the image:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/11-create-blueprint.png" alt="11 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>It will take a while to create the image:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/12-create-blueprint.png" alt="12 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>After completion:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/13-create-blueprint.png" alt="13 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>From GUI we can download the image file:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/builder/14-create-blueprint.png" alt="14 create blueprint">
-</div>
-</div>
-</div>
-</div>
 <nav class="pagination">
   <span class="prev"><a href="03-containers-podman-rollback.html">3.4 Performing automatic rollbacks</a></span>
-  <span class="next"><a href="05-security.html">5. Security</a></span>
+  <span class="next"><a href="04-builder-installing.html">4.1 Installing Image Builder</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

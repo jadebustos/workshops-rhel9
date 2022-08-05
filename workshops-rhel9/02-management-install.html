@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RHEL 9 Workshops</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/02-management-install.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/course-template">RHEL 9 Workshops</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="workshops-rhel9" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="01-installation.html">1. Installation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-management.html">2. RHEL Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-management.html">2.1 Installing Cockpit</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-containers.html">3. Deploying Containers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-containers-rpms.html">3.1 Installing container tools</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-containers-serverless.html">3.2 Deploying Serverless Containers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-containers-podman-autoupdate.html">3.3 Podman auto-update</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-containers-podman-rollback.html">3.4 Performing automatic rollbacks</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-builder.html">4. Image Builder</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-builder-installing.html">4.1 Installing Image Builder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-builder-blueprints.html">4.2 Blueprints</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="05-security.html">5. Security</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="06-edge.html">6. Edge Computing with RHEL</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/02-management-install.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<div class="sect1">
+<h2 id="installingcockpit"><a class="anchor" href="#installingcockpit"></a>Installing cockpit</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To install software the RHEL 9 machine need to have access to RHEL repositories, so check that you have access to them:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf repolist
+Updating Subscription Management repositories.
+repo id                                                                            repo name
+rhel-9-for-x86_64-appstream-rpms                                                   Red Hat Enterprise Linux 9 for x86_64 - AppStream (RPMs)
+rhel-9-for-x86_64-baseos-rpms                                                      Red Hat Enterprise Linux 9 for x86_64 - BaseOS (RPMs)
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To install <strong>cockpit</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf install cockpit -y
+...
+[root@rhel9 ~]# systemctl enable --now cockpit.socket
+Created symlink /etc/systemd/system/sockets.target.wants/cockpit.socket → /usr/lib/systemd/system/cockpit.socket.
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Check the official documentation for your RHEL version to get how cockpit is installed. The procedure may change between versions. <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/managing_systems_using_the_rhel_9_web_console/index#installing-the-web-console_getting-started-with-the-rhel-9-web-console">How to install Cockpit</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To access the <strong>cockpit</strong> service you will need to open de <strong>9090/tcp</strong> port. This port should be opened during <strong>cockpit</strong> installation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# firewall-cmd --list-all
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: enp1s0
+  sources:
+  services: cockpit dhcpv6-client ssh
+  ports: 8080-8083/tcp
+  protocols:
+  forward: yes
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see the service <strong>cockpit</strong> is opened you can access the service through <a href="https://&lt;your" class="bare">https://&lt;your</a> rhel 9 ip&gt;:9090 using a web browser:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cockpit/login.png" alt="login">
+</div>
+</div>
+<div class="paragraph">
+<p>Use the root user to login and you can see the dashboard:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cockpit/dashboard.png" alt="dashboard">
+</div>
+</div>
+<div class="paragraph">
+<p>To the left you can see the <strong>cockpit</strong> installed modules, known as <strong>add-ons</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cockpit/add-ons.png" alt="add ons" width="45%" height="45%">
+</div>
+</div>
+<div class="paragraph">
+<p>You can get the available <strong>add-ons</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf search cockpit-*
+Actualización de repositorios de Subscription Management.
+Última comprobación de caducidad de metadatos hecha hace 0:01:20, el jue 04 ago 2022 13:46:07.
+============================================================================= Coincidencia en Nombre: cockpit-* ==============================================================================
+cockpit-bridge.x86_64 : Cockpit bridge server-side component
+cockpit-composer.noarch : Composer GUI for use with Cockpit
+cockpit-doc.noarch : Cockpit deployment and developer guide
+cockpit-machines.noarch : Cockpit user interface for virtual machines
+cockpit-packagekit.noarch : Cockpit user interface for packages
+cockpit-pcp.x86_64 : Cockpit PCP integration
+cockpit-podman.noarch : Cockpit component for Podman containers
+cockpit-session-recording.noarch : Cockpit Session Recording
+cockpit-storaged.noarch : Cockpit user interface for storage, using udisks
+cockpit-system.noarch : Cockpit admin interface package for configuring and troubleshooting a system
+cockpit-ws.x86_64 : Cockpit Web Service
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To install an <strong>add-on</strong> you only need to install it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf install cockpit-session-recording -y
+...
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Reload your browser:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cockpit/session-recording.png" alt="session recording">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Browse the <strong>add-ons</strong> and install those you find useful.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For instance:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cockpit/network.png" alt="network">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For more information you can check the <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/index">official documentation</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Not only can you manage your RHEL from <strong>cockpit</strong> but you can manage other RHELs from that <strong>cockpit</strong> <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/managing-remote-systems-in-the-web-console_system-management-using-the-rhel-9-web-console">Managing remote systems in the web console</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
