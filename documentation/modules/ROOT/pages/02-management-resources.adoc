@@ -1,0 +1,6 @@
+[#cockpitresources]
+== Cockpit Resources
+
+* https://lab.redhat.com/tracks/webconsole-software[(RHEL Labs) Managing system updates using the web console]
+* https://lab.redhat.com/tracks/webconsole-perf[(RHEL Labs) Using Web Console to Monitor Performance]
+* https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/managing_systems_using_the_rhel_9_web_console/index[(RHEL 9 Official Documentation) Managing systems using the RHEL 9 web console]

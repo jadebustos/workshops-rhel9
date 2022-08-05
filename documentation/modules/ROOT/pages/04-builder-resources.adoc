@@ -2,5 +2,6 @@
 == Image Builder Resources
 
 * https://www.youtube.com/watch?v=UopGqYs0PKA[(Video) RHEL 8 Beta - Building Custom RHEL Images With Image Builder (Composer)]
+* https://lab.redhat.com/tracks/imagebuilder[(RHEL Labs) Using Web Console to build virtual machine images [Image Builder]]
+* https://lab.redhat.com/tracks/imagebuilder-cli[(RHEL Labs) Design and build virtual machine images using commandline tools [Image Builder]]
 * https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/composing_a_customized_rhel_system_image/index[(RHEL 9 Official Documentation) Composing a customized RHEL system image]
-* https://lab.redhat.com/tracks/imagebuilder-cli[(RHEL Labs) Design and build virtual machine images using commandline tools [Image Builder]
