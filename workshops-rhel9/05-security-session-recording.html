@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RHEL 9 Workshops</title>
-    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/06-edge-resources.html">
-    <link rel="prev" href="06-edge.html">
+    <title>Session Recording :: RHEL 9 Workshops</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/05-security-session-recording.html">
+    <link rel="prev" href="05-security.html">
+    <link rel="next" href="05-security-resources.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -105,7 +106,7 @@
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="05-security.html">5. Security</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="05-security-session-recording.html">5.1 Session Recording</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -117,7 +118,7 @@
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="06-edge.html">6. Edge Computing with RHEL</a>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="06-edge-resources.html">A.1 Edge Resources</a>
   </li>
 </ul>
@@ -137,22 +138,109 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">RHEL 9 Workshops</a></li>
-    <li><a href="06-edge.html">6. Edge Computing with RHEL</a></li>
-    <li><a href="06-edge-resources.html">A.1 Edge Resources</a></li>
+    <li><a href="05-security.html">5. Security</a></li>
+    <li><a href="05-security-session-recording.html">5.1 Session Recording</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/06-edge-resources.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/05-security-session-recording.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
+<h1 class="page">Session Recording</h1>
 <div class="sect1">
-<h2 id="edgeresources"><a class="anchor" href="#edgeresources"></a>Edge Resources</h2>
+<h2 id="sessionrecording"><a class="anchor" href="#sessionrecording"></a>Session Recording</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p><strong>Cockpit</strong> needs to be installed and running. If <strong>cockpit</strong> is not installed check <a href="02-management.html#installingcockpit" class="xref page">Installing cockpit</a>.</p>
+</div>
+<div class="paragraph">
+<p>Session Recording it is a RHEL functionality which allows to record user sessions.</p>
+</div>
+<div class="paragraph">
+<p>This feature can be used to record and play back user terminal sessions. All terminal input and output are recordered and stored in text-based format, not video, in the system journal.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installingsessionrecording"><a class="anchor" href="#installingsessionrecording"></a>Installing Session Recording</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The session recording components are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>tlog.</p>
+</li>
+<li>
+<p>SSSD.</p>
+</li>
+<li>
+<p>Cockpit Session Recording Add-On.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So to install it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# dnf install cockpit-session-recording -y
+..
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuringsessionrecording"><a class="anchor" href="#configuringsessionrecording"></a>Configuring Session Recording</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Log into <strong>Cockpit</strong> and go to the <strong>Session Recording</strong> Add-On:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/session-recording/session-recording.png" alt="session recording">
+</div>
+</div>
+<div class="paragraph">
+<p>Click on the gear icon to configure it. Select <strong>All</strong> in the SSSD Config Scope and click <strong>Save</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/session-recording/01-configuration.png" alt="01 configuration">
+</div>
+</div>
+<div class="paragraph">
+<p>If you have some non-root user connect to the RHEL 9 machine using ssh and issue some commands, close the session. If you do not have any non-root user you can create one:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# useradd -md /home/operations operations
+[root@rhel9 ~]# passwd operations</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Login in <strong>Cockpit</strong> go to the <strong>Session Recording</strong> Add-On and you can see all the recordered sessions:</p>
+</div>
+<div class="imageblock unresolved">
+<div class="content">
+<img src="session-recording/04-configuration.png" alt="04 configuration">
+</div>
+</div>
+<div class="paragraph">
+<p>You can reproduce them:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/session-recording/03-configuration.png" alt="03 configuration">
+</div>
+</div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="06-edge.html">6. Edge Computing with RHEL</a></span>
+  <span class="prev"><a href="05-security.html">5. Security</a></span>
+  <span class="next"><a href="05-security-resources.html">A.1 Security Resources</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
