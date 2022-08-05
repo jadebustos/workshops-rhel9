@@ -16,7 +16,8 @@ TIP: Pay attention to the commandline prompts to know the user you are working w
 
 NOTE: This container workshop can be performed both RHEL 9 and RHEL 9 Edge.
 
-include::01-containers-rpms.adoc[]
-include::01-containers-serverless.adoc[]
-include::01-containers-podman-autoupdate.adoc[]
-include::01-containers-podman-rollback.adoc[]
+include::03-containers-rpms.adoc[]
+include::03-containers-serverless.adoc[]
+include::03-containers-podman-autoupdate.adoc[]
+include::03-containers-podman-rollback.adoc[]
+include::04-containers-resources.adoc[]
