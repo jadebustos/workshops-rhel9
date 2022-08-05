@@ -2,11 +2,11 @@
 include::_attributes.adoc[]
 
 [#rhelmanagement]
-== RHEL Management with cockpit
+== RHEL Management with Cockpit
 
-RHEL includes a graphical tool for management. It is named **cockpit**.
+RHEL includes a graphical tool for management. It is named **Cockpit**.
 
-This tool is modular so you will have to install **cockpit** and after that you will need to install the modules for the admin tasks you want to perform:
+This tool is modular so you will have to install **Cockpit** and after that you will need to install the modules for the admin tasks you want to perform:
 
 * Users management
 * Software management
@@ -14,100 +14,3 @@ This tool is modular so you will have to install **cockpit** and after that you 
 * Virtual machines management
 * Session recording
 * ...
-
-[#installingcockpit]
-== Installing cockpit
-
-To install software the RHEL 9 machine need to have access to RHEL repositories, so check that you have access to them:
-
-[source,bash,subs="+macros,+attributes"]
-[root@rhel9 ~]# dnf repolist
-Updating Subscription Management repositories.
-repo id                                                                            repo name
-rhel-9-for-x86_64-appstream-rpms                                                   Red Hat Enterprise Linux 9 for x86_64 - AppStream (RPMs)
-rhel-9-for-x86_64-baseos-rpms                                                      Red Hat Enterprise Linux 9 for x86_64 - BaseOS (RPMs)
-[root@rhel9 ~]# 
-
-To install **cockpit**:
-
-[source,bash,subs="+macros,+attributes"]
-[root@rhel9 ~]# dnf install cockpit -y
-...
-[root@rhel9 ~]# systemctl enable --now cockpit.socket
-Created symlink /etc/systemd/system/sockets.target.wants/cockpit.socket → /usr/lib/systemd/system/cockpit.socket.
-[root@rhel9 ~]#
-
-TIP: Check the official documentation for your RHEL version to get how cockpit is installed. The procedure may change between versions. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/managing_systems_using_the_rhel_9_web_console/index#installing-the-web-console_getting-started-with-the-rhel-9-web-console[How to install Cockpit]
-
-To access the **cockpit** service you will need to open de **9090/tcp** port. This port should be opened during **cockpit** installation:
-
-[source,bash,subs="+macros,+attributes"]
-[root@rhel9 ~]# firewall-cmd --list-all
-public (active)
-  target: default
-  icmp-block-inversion: no
-  interfaces: enp1s0
-  sources: 
-  services: cockpit dhcpv6-client ssh
-  ports: 8080-8083/tcp
-  protocols: 
-  forward: yes
-  masquerade: no
-  forward-ports: 
-  source-ports: 
-  icmp-blocks: 
-  rich rules: 
-[root@rhel9 ~]#
-
-As you can see the service **cockpit** is opened you can access the service through https://<your rhel 9 ip>:9090 using a web browser:
-
-image::cockpit/login.png[]
-
-Use the root user to login and you can see the dashboard:
-
-image::cockpit/dashboard.png[]
-
-To the left you can see the **cockpit** installed modules, known as **add-ons**:
-
-image::cockpit/add-ons.png[width="45%",height="45%"]
-
-You can get the available **add-ons**:
-
-[source,bash,subs="+macros,+attributes"]
-[root@rhel9 ~]# dnf search cockpit-*
-Actualización de repositorios de Subscription Management.
-Última comprobación de caducidad de metadatos hecha hace 0:01:20, el jue 04 ago 2022 13:46:07.
-============================================================================= Coincidencia en Nombre: cockpit-* ==============================================================================
-cockpit-bridge.x86_64 : Cockpit bridge server-side component
-cockpit-composer.noarch : Composer GUI for use with Cockpit
-cockpit-doc.noarch : Cockpit deployment and developer guide
-cockpit-machines.noarch : Cockpit user interface for virtual machines
-cockpit-packagekit.noarch : Cockpit user interface for packages
-cockpit-pcp.x86_64 : Cockpit PCP integration
-cockpit-podman.noarch : Cockpit component for Podman containers
-cockpit-session-recording.noarch : Cockpit Session Recording
-cockpit-storaged.noarch : Cockpit user interface for storage, using udisks
-cockpit-system.noarch : Cockpit admin interface package for configuring and troubleshooting a system
-cockpit-ws.x86_64 : Cockpit Web Service
-[root@rhel9 ~]#
-
-To install an **add-on** you only need to install it:
-
-[source,bash,subs="+macros,+attributes"]
-[root@rhel9 ~]# dnf install cockpit-session-recording -y
-...
-[root@rhel9 ~]#
-
-Reload your browser:
-
-image::cockpit/session-recording.png[]
-
-TIP: Browse the **add-ons** and install those you find useful.
-
-For instance:
-
-image::cockpit/network.png[]
-
-NOTE: For more information you can check the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/index[official documentation].
-
-TIP: Not only can you manage your RHEL from **cockpit** but you can manage other RHELs from that **cockpit** https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_systems_using_the_rhel_9_web_console/managing-remote-systems-in-the-web-console_system-management-using-the-rhel-9-web-console[Managing remote systems in the web console].

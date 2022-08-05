@@ -1,0 +1,14 @@
+[#installingbuilder]
+== Installing Image Nuilder
+
+To install **Image Builder** we will install the cockpit add-on:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# dnf install osbuild-composer composer-cli cockpit-composer bash-completion -y
+...
+[root@rhel9 ~]# systemctl enable --now osbuild-composer.socket
+[root@rhel9 ~]#
+
+Reload your browser:
+
+image::builder/builder.png[]
