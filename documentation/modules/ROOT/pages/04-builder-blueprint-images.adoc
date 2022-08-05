@@ -1,0 +1,23 @@
+[#blueprintsimages]
+== Blueprints vs Images
+
+It is important to know the differences between them.
+
+A blueprint is an image definition:
+
+* Packages included in the image.
+* Users included in the image.
+* Configuration included in the image.
+
+A blueprint can not be deployed or installed itself.
+
+An image is a blueprint converted to a deployable format:
+
+* ISO.
+* Amazon image.
+* Azure image.
+* OpenStack QCOW2.
+* RHV QCOW2.
+* vSphere VMDK.
+
+A blueprint can be downloaded as any Image Builder supported format as image. So we will create a blueprint and that same blueprint could be used to deploy an Amazon instance or Azure one.

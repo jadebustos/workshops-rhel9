@@ -1,13 +1,13 @@
 [#blueprints]
 == Blueprints
 
-Before deploying an image we need to define the image, the content, ... this is named **blueprint**.
+Before deploying an image we need to define the image, the image content, ... this is named **blueprint**.
 
 Clicking in **blueprint** we will be asked for a name and description for the image:..
 
 image::builder/01-create-blueprint.png[]
 
-After creation we could add the packages we want to be installed in the image:..
+After creation we can add the packages we want to be installed in the image:..
 
 image::builder/02-create-blueprint.png[]
 

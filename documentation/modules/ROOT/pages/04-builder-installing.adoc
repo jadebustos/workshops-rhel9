@@ -1,5 +1,5 @@
 [#installingbuilder]
-== Installing Image Nuilder
+== Installing Image Builder
 
 To install **Image Builder** we will install the cockpit add-on:
 
@@ -12,3 +12,5 @@ To install **Image Builder** we will install the cockpit add-on:
 Reload your browser:
 
 image::builder/builder.png[]
+
+Now you can start creating your own RHEL images.

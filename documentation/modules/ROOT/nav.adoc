@@ -9,5 +9,6 @@
 * xref:04-builder.adoc[4. Image Builder]
 ** xref:04-builder-installing.adoc[4.1 Installing Image Builder]
 ** xref:04-builder-blueprints.adoc[4.2 Blueprints]
+** xref:04-builder-resources.adoc[Image Builder Resources]
 * xref:05-security.adoc[5. Security]
 * xref:06-edge.adoc[6. Edge Computing with RHEL]
