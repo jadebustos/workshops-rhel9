@@ -1,0 +1,54 @@
+= Session Recording
+include::_attributes.adoc[]
+
+[#sessionrecording]
+== Session Recording
+
+**Cockpit** needs to be installed and running. If **cockpit** is not installed check xref:02-management.adoc#installingcockpit[Installing cockpit].
+
+Session Recording it is a RHEL functionality which allows to record user sessions.
+
+This feature can be used to record and play back user terminal sessions. All terminal input and output are recordered and stored in text-based format, not video, in the system journal.
+
+[#installingsessionrecording]
+== Installing Session Recording
+
+The session recording components are:
+
+* tlog.
+* SSSD.
+* Cockpit Session Recording Add-On.
+
+So to install it:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# dnf install cockpit-session-recording -y
+..
+[root@rhel9 ~]#
+
+[#configuringsessionrecording]
+== Configuring Session Recording
+
+Log into **Cockpit** and go to the **Session Recording** Add-On:
+
+image::session-recording/session-recording.png[]
+
+Click on the gear icon to configure it. Select **All** in the SSSD Config Scope and click **Save**:
+
+image::session-recording/01-configuration.png[]
+
+If you have some non-root user connect to the RHEL 9 machine using ssh and issue some commands, close the session. If you do not have any non-root user you can create one:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# useradd -md /home/operations operations
+[root@rhel9 ~]# passwd operations
+
+Login in **Cockpit** go to the **Session Recording** Add-On and you can see all the recordered sessions:
+
+image::session-recording/04-configuration.png[]
+
+You can reproduce them:
+
+image::session-recording/03-configuration.png[]
+
+

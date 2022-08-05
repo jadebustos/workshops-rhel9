@@ -4,3 +4,4 @@
 * https://lab.redhat.com/tracks/session-recording-tlog[(RHEL Labs) Configuring Terminal Session Recording]
 * https://lab.redhat.com/tracks/sql-server-session-recording[(RHEL Labs) Terminal Session Recording and SQL Server Auditing]
 * https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/administration_and_configuration_tasks_using_system_roles_in_rhel/configuring-a-system-for-session-recording-using-the-tlog-rhel-system-roles_assembly_updating-packages-to-enable-automation-for-the-rhel-system-roles[(RHEL 9 Official Documentation) Configuring a system for session recording using the Terminal Session Recording RHEL System Role]
+* https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/recording_sessions/index#doc-wrapper[(RHEL 8 Official Documentation) Recording sessions]

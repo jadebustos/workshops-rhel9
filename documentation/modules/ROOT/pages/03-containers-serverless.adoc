@@ -35,7 +35,7 @@ You will need to clone the repository:
 [source,bash,subs="+macros,+attributes"]
 [workshop@rhel9 ~]$ mkdir Dockerfiles
 [workshop@rhel9 Dockerfiles]$ cd Dockerfiles
-[workshop@rhel9 Dockerfiles]$ https://github.com/alexwhen/docker-2048.git
+[workshop@rhel9 Dockerfiles]$ git clone https://github.com/alexwhen/docker-2048.git
 [workshop@rhel9 Dockerfiles]$ ln -s docker-2048/ 2048
 
 As this is a web application and we will use nginx we will need the nginx configuration file:
