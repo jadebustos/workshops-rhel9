@@ -47,5 +47,7 @@ This is a new version designed for Edge computing cases which is based in an inm
 ** xref:04-builder-resources.adoc#builderresources[Image Builder Resources]
 .xref:05-security.adoc[Security]
 * xref:05-security.adoc#security
+** xref:05-security-resources.adoc#securityresources[Security Resources]
 .xref:06-edge.adoc[Edge Computing with RHEL]
 * xref:06-edge.adoc#edge
+** xref:06-edge-resources.adoc#edgeresources[Edge Resources]

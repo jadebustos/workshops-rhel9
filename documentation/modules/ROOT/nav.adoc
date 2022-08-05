@@ -13,4 +13,6 @@
 ** xref:04-builder-blueprints.adoc[4.2 Blueprints]
 ** xref:04-builder-resources.adoc[A.1 Image Builder Resources]
 * xref:05-security.adoc[5. Security]
+** xref:05-security-resources.adoc[A.1 Security Resources]
 * xref:06-edge.adoc[6. Edge Computing with RHEL]
+** xref:06-edge-resources.adoc[A.1 Edge Resources]
