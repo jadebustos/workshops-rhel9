@@ -1,2 +1,4 @@
 [#usingkickstartfiles]
-== Using kickstart files
+== Using kickstart files from an Apache server
+
+== Using kickstart file from within a DVD ISO
