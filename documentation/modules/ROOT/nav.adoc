@@ -1,6 +1,7 @@
 * xref:01-installation.adoc[1. Installation]
+** xref:01-installation-resources.adoc[A.1 RHEL 9 Installation Resources]
 * xref:02-management.adoc[2. RHEL Management]
-** xref:02-management.adoc[2.1 Installing Cockpit]
+** xref:02-management-install.adoc[2.1 Installing Cockpit]
 ** xref:02-management-resources.adoc[A.1 Cockpit Resources]
 * xref:03-containers.adoc[3. Deploying Containers]
 ** xref:03-containers-rpms.adoc[3.1 Installing container tools]

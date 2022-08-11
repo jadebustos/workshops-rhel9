@@ -45,7 +45,7 @@ If you have some non-root user connect to the RHEL 9 machine using ssh and issue
 
 Login in **Cockpit** go to the **Session Recording** Add-On and you can see all the recordered sessions:
 
-image::session-recording/04-configuration.png[]
+image::session-recording/02-configuration.png[]
 
 You can reproduce them:
 
