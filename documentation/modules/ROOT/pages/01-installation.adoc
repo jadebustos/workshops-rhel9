@@ -3,3 +3,5 @@ include::_attributes.adoc[]
 
 [#installingrhel]
 == Installing Red Hat Enterprise Linux 9 (RHEL 9)
+
+In this section we are not going to cover the RHEL 9 manual installation process. We will focus only in automated installation using Kickstart files.
