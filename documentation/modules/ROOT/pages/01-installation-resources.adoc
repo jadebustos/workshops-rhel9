@@ -2,4 +2,4 @@
 == RHEL 9 Installation Resources
 
 * https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/performing_a_standard_rhel_9_installation/index[Performing a standard RHEL 9 installation]
-* https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/performing_an_advanced_rhel_9_installation/index[Performing an advanced RHEL 9 installation]
+* https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/performing_an_advanced_rhel_9_installation/index[Performing an advanced RHEL 9 installation (Installing RHEL 9 using Kickstart)]
