@@ -3,4 +3,4 @@
 
 Kickstart files are files which describe how the system must be installed, partitions, packages to be installed, users, configuration ...
 
-Each time we install a RHEL system using the installation DVD after the installation process finishes a kickstart file is stored in the root HOME directory with the installation we have just performed under the path /root/anaconda-ks.cfg.
+Each time we install a RHEL system using the installation DVD after the installation process finishes a kickstart file is stored in the root HOME directory with the installation we have just performed under the path https://raw.githubusercontent.com/jadebustos/workshops-rhel9/master/documentation/modules/ROOT/assets/files/kickstart/anaconda-ks.cfg[/root/anaconda-ks.cfg].
