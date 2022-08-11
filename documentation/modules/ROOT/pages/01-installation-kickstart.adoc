@@ -9,4 +9,6 @@ Each time we install a RHEL system using the installation DVD after the installa
 
 We can use a kickstart file from a previous installation and adapt it to the new installation.
 
-TIP: You can use the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/performing_an_advanced_rhel_9_installation/index[Red Hat 9 Official Documentation] if you do not become confortable with Kickstart files.
+TIP: You can use the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/performing_an_advanced_rhel_9_installation/index[Red Hat 9 Official Documentation] if you do not become comfortable with Kickstart files.
+
+TIP: Red Hat provides a https://access.redhat.com/labsinfo/kickstartconfig[Kickstart Generator] which is a web tool to easily create kickstart files. Requires a valid Red Hat user.
