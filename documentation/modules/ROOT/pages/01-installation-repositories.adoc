@@ -1,0 +1,6 @@
+[#repositories]
+== Network repositories
+
+It is quite common to use network repositories when we performed automated installations.
+
+Although there are several ways to make repositories available through the network we are going to use http/https for that purpose.

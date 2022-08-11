@@ -1,6 +1,7 @@
 * xref:01-installation.adoc[1. Installation]
 ** xref:01-installation-kickstart.adoc[1.1 Kickstart files]
-** xref:01-installation-using-ks.adoc[1.2 Using Kickstart files]
+** xref:01-installation-repositories.adoc[1.2 Network repositories]
+** xref:01-installation-using-ks.adoc[1.3 Using Kickstart files]
 ** xref:01-installation-resources.adoc[A.1 RHEL 9 Installation Resources]
 * xref:02-management.adoc[2. RHEL Management]
 ** xref:02-management-install.adoc[2.1 Installing Cockpit]
