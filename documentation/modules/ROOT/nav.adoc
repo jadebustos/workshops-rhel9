@@ -1,3 +1,4 @@
+* xref:00-README.adoc[0. README]
 * xref:01-installation.adoc[1. Installation]
 ** xref:01-installation-kickstart.adoc[1.1 Kickstart files]
 ** xref:01-installation-repositories.adoc[1.2 Network repositories]
