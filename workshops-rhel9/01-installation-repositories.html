@@ -170,6 +170,66 @@
 <div class="paragraph">
 <p>Although there are several ways to make repositories available through the network we are going to use http/https for that purpose.</p>
 </div>
+<div class="paragraph">
+<p>First we have to install an http server in a machine to make repositories available:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@httpd ~]# dnf install httpd -y
+...
+[root@httpd ~]# systemctl enable --now httpd</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default the http content will be stored at <strong>/var/www/html</strong> directory so we will create a directory there to store the repositories and a directory named <strong>ks</strong> to store the kickstart files:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@httpd ~]# mkdir /var/www/html/{repo,ks}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the <strong>/var/www/html/repo/</strong> directory create one directory per repository and copy the RPM files.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can copy the <strong>BaseOS</strong> and <strong>AppStream</strong> repositories for the RHEL install DVD for instance.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+From a RHEL system you can mirror a repository using the <strong>reposync</strong> command provided by the <strong>dnf-utils</strong> package.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can modify or create your own repositories using the <strong>createrepo</strong> command provided by the <strong>createrepo</strong> package.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To access the repository you can use the URL <strong><a href="http://httpd-server/repo/REPOSITORY-NAME" class="bare">http://httpd-server/repo/REPOSITORY-NAME</a></strong>.</p>
+</div>
 </div>
 </div>
 <nav class="pagination">
