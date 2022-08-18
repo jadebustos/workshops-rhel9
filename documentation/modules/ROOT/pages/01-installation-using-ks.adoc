@@ -19,7 +19,7 @@ image::kickstart/boot-network-kickstart.png[]
 
 TIP: Replace the kickstart URL for your kickstart file URL.
 
-The kickstart used in this example is https://raw.githubusercontent.com/jadebustos/workshops-rhel9/master/documentation/modules/ROOT/assets/files/kickstart/anaconda-ks.cfg[/root/anaconda-ks.cfg]. After finishing the deployment you will have to reboot the server manually.
+The kickstart used in this example is https://raw.githubusercontent.com/jadebustos/workshops-rhel9/master/documentation/modules/ROOT/assets/files/kickstart/anaconda-ks.cfg[this one]. After finishing the deployment you will have to reboot the server manually.
 
 You must take into consideration:
 
@@ -37,3 +37,9 @@ As kickstart files is not one of these workshops purposes so if you are not comf
 5. Configure static network configuration.
 
 == Using kickstart files from within a DVD ISO
+
+The above method is not a completely unattended method due to you will have to manually add the URL for the kickstart file.
+
+To perform a completely unattended deployment we need:
+
+1. To modify the RHEL 9 Installation DVD to include the kickstart url.
