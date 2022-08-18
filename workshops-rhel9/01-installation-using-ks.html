@@ -219,7 +219,7 @@ Replace the kickstart URL for your kickstart file URL.
 </table>
 </div>
 <div class="paragraph">
-<p>The kickstart used in this example is <a href="https://raw.githubusercontent.com/jadebustos/workshops-rhel9/master/documentation/modules/ROOT/assets/files/kickstart/anaconda-ks.cfg">/root/anaconda-ks.cfg</a>. After finishing the deployment you will have to reboot the server manually.</p>
+<p>The kickstart used in this example is <a href="https://raw.githubusercontent.com/jadebustos/workshops-rhel9/master/documentation/modules/ROOT/assets/files/kickstart/anaconda-ks.cfg">this one</a>. After finishing the deployment you will have to reboot the server manually.</p>
 </div>
 <div class="paragraph">
 <p>You must take into consideration:</p>
@@ -267,7 +267,19 @@ Replace the kickstart URL for your kickstart file URL.
 <div class="sect1">
 <h2 id="_using_kickstart_files_from_within_a_dvd_iso"><a class="anchor" href="#_using_kickstart_files_from_within_a_dvd_iso"></a>Using kickstart files from within a DVD ISO</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>The above method is not a completely unattended method due to you will have to manually add the URL for the kickstart file.</p>
+</div>
+<div class="paragraph">
+<p>To perform a completely unattended deployment we need:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>To modify the RHEL 9 Installation DVD to include the kickstart url.</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <nav class="pagination">
