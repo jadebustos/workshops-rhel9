@@ -28,3 +28,5 @@ TIP: You can modify or create your own repositories using the **createrepo** com
 To access the repository you can use the URL **http://httpd-server/repo/REPOSITORY-NAME**.
 
 TIP: Network repositories can be configured using https as well.
+
+In the **/var/www/html/ks** directory we will include the kickstart file to perform unattended deployments.

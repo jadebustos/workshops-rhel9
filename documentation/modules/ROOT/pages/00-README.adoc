@@ -1,7 +1,7 @@
 = README
 include::_attributes.adoc[]
 
-These workshops are intended to introduce to RHEL 9 new features and thus required some Linux and RHEL Knowledge. For instance, you will need to know how configure Red Hat repository and create them if necessary.
+These workshops are intended to introduce to RHEL 9 new features and thus required some Linux and RHEL Knowledge. For instance, you will need to know how configure Red Hat repositories and create them if necessary.
 
 In each workshop within the **Resources** section you could find complementary information.
 

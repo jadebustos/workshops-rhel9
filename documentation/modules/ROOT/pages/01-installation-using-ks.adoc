@@ -1,4 +1,39 @@
 [#usingkickstartfiles]
 == Using kickstart files from an Apache Server
 
+To perform an unattended deployment we can boot from a RHEL iso, edit the boot commands and add the following **inst.ks=http://httpd-server/ks/custom-kickstart.ks**.
+
+This will perform the installation according to the kickstart file included in the boot command line.
+
+To perform an unattended deployment:
+
+1. Create a Virtual Machine with at least 15 GB disk, 2 CPU and 4 GB of RAM.
+2. Use the RHEL 9 Installation DVD to boot the Virtual Machine (rhel-baseos-9.0-x86_64-dvd.iso) as you will do to perform a manual installation.
+3. At the boot menu select the **Install Red Hat Enterprise Linux 9.0** and press the **Tab** key to edit the boot options:
+
+image::kickstart/rhel9-boot-menu.png[]
+
+4. Add **inst.ks=http://192.168.122.1/ks/anaconda-ks.cfg** and press return to start the unattended deployment.
+
+image::kickstart/boot-network-kickstart.png[]
+
+TIP: Replace the kickstart URL for your kickstart file URL.
+
+The kickstart used in this example is https://raw.githubusercontent.com/jadebustos/workshops-rhel9/master/documentation/modules/ROOT/assets/files/kickstart/anaconda-ks.cfg[/root/anaconda-ks.cfg]. After finishing the deployment you will have to reboot the server manually.
+
+You must take into consideration:
+
+1. This is a simple kickstart example.
+2. IP configuration is done using DHCP.
+3. Root user can not be accessed by SSH (password is in kickstart comments).
+4. The install DVD must be used due to there are no network repositories configured.
+
+As kickstart files is not one of these workshops purposes so if you are not comfortable with kickstart files you should modify the above kickstart file to:
+
+1. Create non-root users.
+2. Provide passwordless sudo to some users.
+3. Install additional software.
+4. Perform custom disk partitioning.
+5. Configure static network configuration.
+
 == Using kickstart files from within a DVD ISO
