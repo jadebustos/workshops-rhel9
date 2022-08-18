@@ -167,7 +167,101 @@
 <div class="sect1">
 <h2 id="usingkickstartfiles"><a class="anchor" href="#usingkickstartfiles"></a>Using kickstart files from an Apache Server</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>To perform an unattended deployment we can boot from a RHEL iso, edit the boot commands and add the following <strong>inst.ks=http://httpd-server/ks/custom-kickstart.ks</strong>.</p>
+</div>
+<div class="paragraph">
+<p>This will perform the installation according to the kickstart file included in the boot command line.</p>
+</div>
+<div class="paragraph">
+<p>To perform an unattended deployment:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a Virtual Machine with at least 15 GB disk, 2 CPU and 4 GB of RAM.</p>
+</li>
+<li>
+<p>Use the RHEL 9 Installation DVD to boot the Virtual Machine (rhel-baseos-9.0-x86_64-dvd.iso) as you will do to perform a manual installation.</p>
+</li>
+<li>
+<p>At the boot menu select the <strong>Install Red Hat Enterprise Linux 9.0</strong> and press the <strong>Tab</strong> key to edit the boot options:</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/kickstart/rhel9-boot-menu.png" alt="rhel9 boot menu">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add <strong>inst.ks=http://192.168.122.1/ks/anaconda-ks.cfg</strong> and press return to start the unattended deployment.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/kickstart/boot-network-kickstart.png" alt="boot network kickstart">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Replace the kickstart URL for your kickstart file URL.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The kickstart used in this example is <a href="https://raw.githubusercontent.com/jadebustos/workshops-rhel9/master/documentation/modules/ROOT/assets/files/kickstart/anaconda-ks.cfg">/root/anaconda-ks.cfg</a>. After finishing the deployment you will have to reboot the server manually.</p>
+</div>
+<div class="paragraph">
+<p>You must take into consideration:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>This is a simple kickstart example.</p>
+</li>
+<li>
+<p>IP configuration is done using DHCP.</p>
+</li>
+<li>
+<p>Root user can not be accessed by SSH (password is in kickstart comments).</p>
+</li>
+<li>
+<p>The install DVD must be used due to there are no network repositories configured.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>As kickstart files is not one of these workshops purposes so if you are not comfortable with kickstart files you should modify the above kickstart file to:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create non-root users.</p>
+</li>
+<li>
+<p>Provide passwordless sudo to some users.</p>
+</li>
+<li>
+<p>Install additional software.</p>
+</li>
+<li>
+<p>Perform custom disk partitioning.</p>
+</li>
+<li>
+<p>Configure static network configuration.</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <div class="sect1">
