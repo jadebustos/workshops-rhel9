@@ -42,4 +42,104 @@ The above method is not a completely unattended method due to you will have to m
 
 To perform a completely unattended deployment we need:
 
-1. To modify the RHEL 9 Installation DVD to include the kickstart url.
+1. A RHEL/Fedora machine (or a Linux one).
+2. The RHEL 9 Install DVD in the machine (**/root/rhel-baseos-9.0-x86_64-dvd.iso**).
+3. A customized kickstart file (**/root/custom-ks.cfg**).
+4. To modify the RHEL 9 Installation DVD to include the kickstart url.
+
+So we need to have free disk space to store:
+
+* The RHEL 9 Install DVD.
+* A copy for the RHEL 9 Install DVD.
+* The customized RHEL 9 Installation DVD.
+* If you plan to add additional RPM packages you must have free disk for them.
+
+So at least we need 3 times free space for the RHEL 9 Install DVD.
+
+We have mount the RHEL 9 Installation DVD and copy all the contents to a temporary directory:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# mount -t iso9660 /root/rhel-baseos-9.0-x86_64-dvd.iso /media/isos -o loop
+[root@rhel9 ~]# mkdir /tmp/customiso
+[root@rhel9 ~]# cp -prf /media/isos/* /tmp/customiso
+[root@rhel9 ~]#
+
+NOTE: We will do all the customization under the **/tmp/customiso** directory.
+
+We will need to allow writing in some files/directories:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# chmod 0755 /tmp/customiso/{images,BaseOS,AppStream,AppStream/repodata,AppStream/Packages,BaseOS/
+repodata,BaseOS/Packages,EFI,EFI/BOOT}
+[root@rhel9 ~]# chmod 0644 /tmp/customiso/isolinux/isolinux.bin
+[root@rhel9 ~]#
+
+Now we need to install some utilities to be able to create the customized DVD boot image:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# dnf install genisoimage syslinux squashfs-tools createrepo -y
+[root@rhel9 ~]#
+
+Let's get the RHEL 9 Install DVD label:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# ISOLABEL=$(isoinfo -d -i /root/rhel-baseos-9.0-x86_64-dvd.iso | grep 'Volume id:' | awk -F' ' '{print $3}')
+[root@rhel9 ~]# echo $ISOLABEL
+RHEL-9-0-0-BaseOS-x86_64
+[root@rhel9 ~]#
+
+We need to copy the kickstart file:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# cp /root/custom-ks.cfg /tmp/customiso
+[root@rhel9 ~]#
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# mount /tmp/customiso/images/efiboot.img /mnt/ -o loop
+[root@rhel9 ~]#
+
+Now we are going to edit the boot menu to add the kickstart part so no user action will be required to perform the installation. So we have to edit the file **/mnt/EFI/BOOT/grub.cfg** and add the **inst.ks** part:
+
+[source,bash,subs="+macros,+attributes"]
+menuentry 'Install Red Hat Enterprise Linux 9.0' --class fedora --class gnu-linux --class gnu --class os {
+        linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:LABEL=RHEL-9-0-0-BaseOS-x86_64 inst.ks=hd:LABEL=RHEL-9-0-0-BaseOS-x86_64:/custom-ks.cfg quiet
+        initrdefi /images/pxeboot/initrd.img
+}
+
+TIP: We can get the DVD label from that file.
+
+After the modifications we umount the **efiboot.img**. We perform changes we have just made in **/mnt/EFI/BOOT/grub.cfg** in the file **/tmp/customiso/EFI/BOOT/grub.cfg**
+
+TIP: We can add/remove packages to the **BaseOS** and **AppStream** repositories. If we decided to we will need to recreate the repository data using the **createrepo** command. Remember to use the comps-XXX.xml file to recreate the repository data and to modify it if you want to add additional install groups.
+
+Let's modify **/tmp/customiso/isolinux/isolinux.cfg**:
+
+[source,bash,subs="+macros,+attributes"]
+...
+label linux
+  menu label ^Install Red Hat Enterprise Linux 9.0
+  kernel vmlinuz
+  append initrd=initrd.img inst.stage2=hd:LABEL=RHEL-9-0-0-BaseOS-x86_64 inst.ks=hd:LABEL=RHEL-9-0-0-BaseOS-x86_64:/custom-ks.cfg quiet
+...
+label text
+  menu indent count 5
+  menu label Install Red Hat Enterprise Linux 9.0 using ^text mode
+  text help
+        Try this option out if you're having trouble installing
+        Red Hat Enterprise Linux 9.0.
+  endtext
+  kernel vmlinuz
+  append initrd=initrd.img inst.stage2=hd:LABEL=RHEL-9-0-0-BaseOS-x86_64 inst.text inst.ks=hd:LABEL=RHEL-9-0-0-BaseOS-x86_64:/custom-ks.cfg quiet
+...
+
+
+Now we can create our custom ISO:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 customiso]# mkisofs -o /root/custom-rhel-baseos-9.0-x86_64-dvd.iso -b isolinux/isolinux.bin -J -R -l -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e images/efiboot.img -no-emul-boot -graft-points -joliet-long -V "$ISOLABEL" .
+[root@rhel9 customiso]# isohybrid --uefi /root/custom-rhel-baseos-9.0-x86_64-dvd.iso
+isohybrid: Warning: more than 1024 cylinders: 8182
+isohybrid: Not all BIOSes will be able to boot this device
+[root@rhel9 customiso]#
+
+NOTE: It seems that there is https://bugzilla.redhat.com/show_bug.cgi?id=1914955[a regression in RHEL 9.0] so this will not work, yet.
