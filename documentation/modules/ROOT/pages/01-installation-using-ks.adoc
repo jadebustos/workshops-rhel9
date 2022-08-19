@@ -147,4 +147,4 @@ isohybrid: Not all BIOSes will be able to boot this device
 
 NOTE: It seems that there is https://bugzilla.redhat.com/show_bug.cgi?id=1914955[a regression in RHEL 9.0] so this will not work, yet.
 
-Now you can use the custom ISO to boot and install a RHEL 9 using the embeded kickstart or a kickstart in an Apache server if you prefer.
+Now you can use the custom ISO to boot and install a RHEL 9 using the embedded kickstart or a kickstart in an Apache server if you prefer.
