@@ -6,7 +6,7 @@
     <title>Edge Computing with RHEL :: RHEL 9 Workshops</title>
     <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/06-edge.html">
     <link rel="prev" href="05-security-resources.html">
-    <link rel="next" href="06-edge-resources.html">
+    <link rel="next" href="06-edge-deployment.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -137,6 +137,15 @@
     <a class="nav-link" href="06-edge.html">6. Edge Computing with RHEL</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="06-edge-deployment.html">6.1 Deployment for RHEL in the Edge</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="06-edge-builder.html">6.2 Deployment for RHEL in the Edge using Image Builder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="06-edge-insights.html">6.3 Deployment for RHEL in the Edge using Red Hat Insights</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="06-edge-resources.html">A.1 Edge Resources</a>
   </li>
 </ul>
@@ -167,12 +176,45 @@
 <div class="sect1">
 <h2 id="edge"><a class="anchor" href="#edge"></a>RHEL in the Edge</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>We can deploy RHEL in the Edge like we used to do in servers either virtual or physical. Although this is a valid option Edge Computing has its own challenges as devices could be deployed in places where there is no much bandwith available, unreliable network communications, &#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>For this reason RHEL comes with a Edge "flavour". Functionalities and software are the same that are available on RHEL but the way it is deployed and managed is different.</p>
+</div>
+<div class="paragraph">
+<p>May be you have heard about CoreOS[<a href="https://getfedora.org/en/coreos?stream=stable" class="bare">https://getfedora.org/en/coreos?stream=stable</a>] which is a minimal OS which is inmutable. This OS is used in Red Hat OpenShift Container Platform due to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It is easy and fast to deploy and update due to its minimal size.</p>
+</li>
+<li>
+<p>It is secure due to the software footprint is minimal.</p>
+</li>
+<li>
+<p>Being inmutable means that binaries can not be changed so you only can modify the application and the data one you have built and deployed the image.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can deploy any kind of workloads using the Edge version for RHEL containerized workloads or traditional ones.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="05-security-resources.html">A.1 Security Resources</a></span>
-  <span class="next"><a href="06-edge-resources.html">A.1 Edge Resources</a></span>
+  <span class="next"><a href="06-edge-deployment.html">6.1 Deployment for RHEL in the Edge</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
