@@ -1,0 +1,7 @@
+[#edgedeployment]
+== Deployment for RHEL in the Edge
+
+To deploy a RHEL Edge image we first need to build the image and we have two options:
+
+1. We can use the Image Builder feature in a RHEL 9 machine.
+2. We can use the Red Hat Insights Service[https://console.redhat.com].

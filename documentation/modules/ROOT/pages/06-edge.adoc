@@ -3,3 +3,15 @@ include::_attributes.adoc[]
 
 [#edge]
 == RHEL in the Edge
+
+We can deploy RHEL in the Edge like we used to do in servers either virtual or physical. Although this is a valid option Edge Computing has its own challenges as devices could be deployed in places where there is no much bandwith available, unreliable network communications, ...
+
+For this reason RHEL comes with a Edge "flavour". Functionalities and software are the same that are available on RHEL but the way it is deployed and managed is different.
+
+May be you have heard about CoreOS[https://getfedora.org/en/coreos?stream=stable] which is a minimal OS which is inmutable. This OS is used in Red Hat OpenShift Container Platform due to:
+
+* It is easy and fast to deploy and update due to its minimal size.
+* It is secure due to the software footprint is minimal.
+* Being inmutable means that binaries can not be changed so you only can modify the application and the data one you have built and deployed the image.
+
+NOTE: You can deploy any kind of workloads using the Edge version for RHEL containerized workloads or traditional ones.

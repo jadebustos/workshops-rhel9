@@ -56,4 +56,7 @@ This is a new version designed for Edge computing cases which is based in an inm
 ** xref:05-security-resources.adoc#securityresources[Security Resources]
 .xref:06-edge.adoc[Edge Computing with RHEL]
 * xref:06-edge.adoc#edge
+** xref:06-edge-deployment.adoc#edgedeployment[Deployment for RHEL in the Edge]
+** xref:06-edge-builder.adoc#edgebuilder[Deployment for RHEL in the Edge using Image Builder]
+** xref:06-edge-insights.adoc#edgeinsights[Deployment for RHEL in the Edge using Red Hat Insights]
 ** xref:06-edge-resources.adoc#edgeresources[Edge Resources]

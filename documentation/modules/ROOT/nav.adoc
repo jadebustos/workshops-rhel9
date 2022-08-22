@@ -21,4 +21,7 @@
 ** xref:05-security-session-recording.adoc[5.1 Session Recording]
 ** xref:05-security-resources.adoc[A.1 Security Resources]
 * xref:06-edge.adoc[6. Edge Computing with RHEL]
+** xref:06-edge-deployment.adoc[6.1 Deployment for RHEL in the Edge]
+** xref:06-edge-builder.adoc[6.2 Deployment for RHEL in the Edge using Image Builder]
+** xref:06-edge-insights.adoc[6.3 Deployment for RHEL in the Edge using Red Hat Insights]
 ** xref:06-edge-resources.adoc[A.1 Edge Resources]

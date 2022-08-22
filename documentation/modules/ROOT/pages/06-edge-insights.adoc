@@ -1,0 +1,2 @@
+[#edgeinsights]
+== Deployment for RHEL in the Edge using Red Hat Insights
