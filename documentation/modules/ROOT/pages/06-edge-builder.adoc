@@ -5,5 +5,5 @@ This method offers you more control over the Edge image creation.
 
 First of all you will have to deploy a RHEL server installing:
 
-1. Cockpit (xref:02-management.adoc#installingcockpit[Installing cockpit]).
+1. Cockpit (xref:02-management.adoc[RHEL Managament]).
 2. Image Builder (xref:04-builder.adoc[Image Builder]).

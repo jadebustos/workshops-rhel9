@@ -4,6 +4,6 @@ include::_attributes.adoc[]
 [#imagebuilder]
 == Create RHEL images to deploy everywhere
 
-**Cockpit** needs to be installed and running. If **cockpit** is not installed check xref:02-management.adoc#installingcockpit[Installing cockpit].
+**Cockpit** needs to be installed and running. If **cockpit** is not installed check xref:02-management.adoc[RHEL Managament].
 
 To create RHEL images we will use **image builder**.

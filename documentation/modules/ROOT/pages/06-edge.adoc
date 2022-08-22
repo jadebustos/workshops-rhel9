@@ -14,4 +14,6 @@ May be you have heard about https://getfedora.org/en/coreos?stream=stable[CoreOS
 * It is secure due to the software footprint is minimal.
 * Being inmutable means that binaries can not be changed so you only can modify the application and the data one you have built and deployed the image.
 
+The RHEL Edge version uses this OS as well.
+
 NOTE: You can deploy any kind of workloads using the Edge version for RHEL, containerized workloads or traditional ones.
