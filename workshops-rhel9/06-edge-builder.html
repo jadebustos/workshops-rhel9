@@ -196,27 +196,78 @@
 <p>When <strong>Cockpit</strong> and the <strong>Image Builder</strong> service are installed connect to Cockpit and go to Image Builder and create a blueprint for your Edge deployment as indicated in <a href="04-builder-blueprints.html" class="xref page">Blueprints</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_using_an_iso_image_to_deploy_the_image"><a class="anchor" href="#_using_an_iso_image_to_deploy_the_image"></a>Using an ISO image to deploy the image</h3>
-<div class="paragraph">
-<p>Once the blueprint has been created we need to create an image for the blueprint, in this case:</p>
-</div>
-<div class="imageblock unresolved">
-<div class="content">
-<img src="cockpit/11-create-blueprint.png" alt="11 create blueprint">
-</div>
-</div>
-<div class="paragraph">
-<p>Once the image build has finished we can download the ISO file:</p>
-</div>
-<div class="imageblock unresolved">
-<div class="content">
-<img src="cockpit/14-create-blueprint.png" alt="14 create blueprint">
-</div>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_deploying_a_commited_image"><a class="anchor" href="#_deploying_a_commited_image"></a>Deploying a commited image</h3>
-
+<div class="paragraph">
+<p>Once the blueprint has been created we need to create an image for the blueprint, in this case select <strong>RHEL for Edge Commit (.tar)</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/edge-deployment/commit-01.png" alt="commit 01">
+</div>
+</div>
+<div class="paragraph">
+<p>And click on <strong>Create</strong>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/edge-deployment/commit-02.png" alt="commit 02">
+</div>
+</div>
+<div class="paragraph">
+<p>After the image creation we can download it:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/edge-deployment/commit-04.png" alt="commit 04">
+</div>
+</div>
+<div class="paragraph">
+<p>As we can see we have two different images for the same template:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>An ISO image.</p>
+</li>
+<li>
+<p>The Commit tar image.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Once we have a blueprint we can create different images for different platforms using the same blueprint.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We need to publish the image using a http server so as explained in <a href="01-installation-repositories.html" class="xref page">Network repositories</a> we deploy Apache and we will create a directory to publish the image:..</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# cd /var/www/html
+[root@rhel9 html]# mkdir ostree</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We uncompress the image in that directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 html]# tar xf /root/8a987451-c840-45b0-af12-3b3f575b5fd6-commit.tar -C /var/www/html/ostree
+[root@rhel9 html]# ls -lhZ /var/www/html/ostree
+total 4.0K
+-rw-r--r--. 1 root root unconfined_u:object_r:httpd_sys_content_t:s0 553 Aug 24 15:53 compose.json
+drwxr-xr-x. 7 root root unconfined_u:object_r:httpd_sys_content_t:s0 102 Aug 24 15:53 repo
+[root@rhel9 html]#</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
