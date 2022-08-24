@@ -7,3 +7,10 @@ First of all you will have to deploy a RHEL server installing:
 
 1. Cockpit (xref:02-management.adoc[RHEL Managament]).
 2. Image Builder (xref:04-builder.adoc[Image Builder]).
+
+When **Cockpit** and the **Image Builder** service are installed connect to Cockpit and go to Image Builder and create a blueprint for your Edge deployment as indicated in xref:04-builder-blueprints.adoc[Blueprints].
+
+=== Using an ISO image to deploy the image
+
+=== Deploying a commited image
+
