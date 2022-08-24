@@ -188,15 +188,10 @@
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# composer-cli --help
-commandline tool for osbuild-composer</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Usage:
-  composer-cli [command]</p>
-</div>
-<div class="paragraph">
-<p>Available Commands:
+commandline tool for osbuild-composer
+Usage:
+  composer-cli [command]
+Available Commands:
   blueprints  Manage blueprints
   completion  Generate the autocompletion script for the specified shell
   compose     Manage composes
@@ -207,21 +202,21 @@ commandline tool for osbuild-composer</code></pre>
   projects    Project related commands
   sources     Manage sources
   status      API server status
-  version     Display the version and exit</p>
-</div>
-<div class="paragraph">
-<p>Flags:
+  version     Display the version and exit
+Flags:
   -a, --api int         Server API Version to use (default 1)
   -h, --help            help for composer-cli
   -j, --json            Output the raw JSON response instead of the normal output
       --log string      Path to optional logfile
-  -s, --socket string   Path to the server&#8217;s socket file (default "/run/weldr/api.socket")
+  -s, --socket string   Path to the server's socket file (default "/run/weldr/api.socket")
       --test int        Pass test mode to compose. 1=Mock compose with fail. 2=Mock compose with finished.
-      --timeout int     Timeout to use for server communication. Set to 0 for no timeout (default 240)</p>
+      --timeout int     Timeout to use for server communication. Set to 0 for no timeout (default 240)
+Use "composer-cli [command] --help" for more information about a command.
+[root@rhel9 ~]#</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Use "composer-cli [command] --help" for more information about a command.
-[root@rhel9 ~]#</p>
+<p>We can check the blueprints:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -275,15 +270,36 @@ You can see in the last column the type of the image. <strong>edge-commit</stron
 </table>
 </div>
 <div class="paragraph">
-<p>We can also the the image status:</p>
+<p>We can also get the image status:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">composer-cli compose status
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# composer-cli compose status
 dd3bb1c4-5eff-4f50-8e55-d657284ec0cb FINISHED Tue Jul 19 00:44:13 2022 edgeimage       0.0.3 edge-commit      2147483648
 8a987451-c840-45b0-af12-3b3f575b5fd6 FINISHED Wed Aug 24 15:53:26 2022 helloworld      0.0.2 edge-commit      2147483648
 90387d4d-214f-464b-bb8c-2507165e16c3 FINISHED Wed Aug 24 15:37:39 2022 helloworld      0.0.2 image-installer  2147483648
 043fc8bf-0c98-4d75-b6f7-07ca2868b8fb FINISHED Thu Jul 7 11:34:25 2022 rhel9edge       0.0.1 edge-commit      2147483648
+[root@rhel9 ~]#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To download an image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# composer-cli compose list
+043fc8bf-0c98-4d75-b6f7-07ca2868b8fb FINISHED rhel9edge 0.0.1 edge-commit
+8a987451-c840-45b0-af12-3b3f575b5fd6 FINISHED helloworld 0.0.2 edge-commit
+90387d4d-214f-464b-bb8c-2507165e16c3 FINISHED helloworld 0.0.2 image-installer
+b965ebd7-819e-4d48-a830-6feae88e7a9d FINISHED consum 0.0.3 edge-commit
+dd3bb1c4-5eff-4f50-8e55-d657284ec0cb FINISHED edgeimage 0.0.3 edge-commit
+e5c180f5-c7e2-46a0-989b-9be936f7e1bd FINISHED consum 0.0.2 edge-commit
+[root@rhel9 ~]# composer-cli compose image 8a987451-c840-45b0-af12-3b3f575b5fd6
+8a987451-c840-45b0-af12-3b3f575b5fd6-commit.tar
+[root@rhel9 ~]# ls -lh
+total 669M
+-rw-------. 1 root root 669M ago 24 16:41 8a987451-c840-45b0-af12-3b3f575b5fd6-commit.tar
+-rw-------. 1 root root  930 jul  6 09:25 anaconda-ks.cfg
 [root@rhel9 ~]#</code></pre>
 </div>
 </div>
