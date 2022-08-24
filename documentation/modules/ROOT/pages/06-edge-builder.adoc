@@ -48,3 +48,18 @@ total 4.0K
 -rw-r--r--. 1 root root unconfined_u:object_r:httpd_sys_content_t:s0 553 Aug 24 15:53 compose.json
 drwxr-xr-x. 7 root root unconfined_u:object_r:httpd_sys_content_t:s0 102 Aug 24 15:53 repo
 [root@rhel9 html]# 
+
+Now we need to create a kickstart file as we see in xref:01-installation-using-ks.adoc[Using Kickstart files] but with some differences.
+
+We can use https://raw.githubusercontent.com/jadebustos/workshops-rhel9/master/documentation/modules/ROOT/assets/files/kickstart/edge-ks.cfg[this kickstart file] to provision the Edge server.
+
+We have to use some especific kickstart configuration for Edge deployments. First, to configure Edge repositories, where the Commit tar image was uncompressed:
+
+[source,bash,subs="+macros,+attributes"]
+ostreesetup --nogpg --url=http://192.168.122.1/ostree/repo/ --osname=rhel --remote=edge --ref=rhel/9/x86_64/edge
+
+Where:
+
+* **http://192.168.122.1/ostree/repo/** is the URL where the repo was uncompressed.
+
+Users HOME directories are under **/var/home**. Due to CoreOS is an inmutable OS the user HOME directories will be placed under **/var/home** directory.
