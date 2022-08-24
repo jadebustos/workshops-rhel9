@@ -12,5 +12,13 @@ When **Cockpit** and the **Image Builder** service are installed connect to Cock
 
 === Using an ISO image to deploy the image
 
+Once the blueprint has been created we need to create an image for the blueprint, in this case:
+
+image::cockpit/11-create-blueprint.png[]
+
+Once the image build has finished we can download the ISO file:
+
+image::cockpit/14-create-blueprint.png[]
+
 === Deploying a commited image
 
