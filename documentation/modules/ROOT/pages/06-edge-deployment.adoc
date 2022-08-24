@@ -5,3 +5,5 @@ To deploy a RHEL Edge image we first need to build the image and we have two opt
 
 1. We can use the Image Builder feature in a RHEL 9 machine.
 2. We can use the https://console.redhat.com[Red Hat Insights Service].
+
+When **Cockpit** and the **Image Builder** service are installed connect to Cockpit and go to Image Builder and create a blueprint for your Edge deployment as indicated in xref:04-builder-blueprints.adoc.
