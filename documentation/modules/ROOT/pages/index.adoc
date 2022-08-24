@@ -49,6 +49,7 @@ This is a new version designed for Edge computing cases which is based in an inm
 * xref:04-builder.adoc#imagebuilder
 ** xref:04-builder-installing.adoc#installingbuilder[Installing Image Builder]
 ** xref:04-builder-blueprints.adoc#blueprints[Blueprints]
+** xref:04-builder-cmdline.adoc[Using Image Builder from the command line]
 ** xref:04-builder-resources.adoc#builderresources[Image Builder Resources]
 .xref:05-security.adoc[Security]
 * xref:05-security.adoc#security

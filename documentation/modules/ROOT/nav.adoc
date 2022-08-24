@@ -16,6 +16,7 @@
 * xref:04-builder.adoc[4. Image Builder]
 ** xref:04-builder-installing.adoc[4.1 Installing Image Builder]
 ** xref:04-builder-blueprints.adoc[4.2 Blueprints]
+** xref:04-builder-cmdline.adoc[4.3 Using image builder from the command line]
 ** xref:04-builder-resources.adoc[A.1 Image Builder Resources]
 * xref:05-security.adoc[5. Security]
 ** xref:05-security-session-recording.adoc[5.1 Session Recording]

@@ -1,0 +1,85 @@
+[#buildercmdline]
+== Using image builder from the command line
+
+Image Builder can be used from the command line as well.
+
+In the server where you deployed Image Builder:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# composer-cli --help
+commandline tool for osbuild-composer
+
+Usage:
+  composer-cli [command]
+
+Available Commands:
+  blueprints  Manage blueprints
+  completion  Generate the autocompletion script for the specified shell
+  compose     Manage composes
+  distros     Manage distributions
+  doc         Generate manpage files
+  help        Help about any command
+  modules     Module related commands
+  projects    Project related commands
+  sources     Manage sources
+  status      API server status
+  version     Display the version and exit
+
+Flags:
+  -a, --api int         Server API Version to use (default 1)
+  -h, --help            help for composer-cli
+  -j, --json            Output the raw JSON response instead of the normal output
+      --log string      Path to optional logfile
+  -s, --socket string   Path to the server's socket file (default "/run/weldr/api.socket")
+      --test int        Pass test mode to compose. 1=Mock compose with fail. 2=Mock compose with finished.
+      --timeout int     Timeout to use for server communication. Set to 0 for no timeout (default 240)
+
+Use "composer-cli [command] --help" for more information about a command.
+[root@rhel9 ~]#
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# composer-cli blueprints list
+helloworld
+[root@rhel9 ~]# composer-cli blueprints show helloworld
+name = "helloworld"
+description = "my first image"
+version = "0.0.2"
+modules = []
+groups = []
+distro = ""
+[[packages]]
+name = "podman"
+version = "*"
+[[packages]]
+name = "container-selinux"
+version = "*"
+[customizations]
+[[customizations.user]]
+name = "operator"
+description = "operator"
+password = "r3dh4t1!"
+key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCvPl4Aof9kRJPDgSKphNV4WAX7kNMcBVwsevuqCJphqmoLHS2onMiZRgcYJV6neKcFzB+kTOKhVzorC8uWNO5K+bTCeF0XkPeDrpCckatYVMtApWhvuqBTwER5x4i2mXAoEfJKNmgZkK3a6/bFdup9nXFi183ZAxaJJPXtkXZRA4dYiRDxKcWdcndDKGM+mFZD6R9en7Up38a4SZsYxCA/MX123ozYurLPniKXL2D4p+pioriCGVLX5BpiCiMrglaHX1XzBUmbHePWDxUoCzKCiD2LVDWZKK3McAXzzOOwMJeTq6GI0wA4FQlpAg9W+aCsCWyiySumS/PFTUGXwbnWI44YJN+H0ywlUWIeP5IsDMGqiYBcXPjdg96tYIY8ueEUbIRf13FLJQlsxCLBNiWwSB08JwJwAD06N3fiWAkJ/weQsNEQeLU7RSJxX0YlmZDr4r+MTnS02A2CcDaA0CfB4M93kJYQX8bk8S+dav7bis8CMsQ7Z+zGXvwrmPOtYRGTKqRPRvgJRj9xVuwuPZvuBkNj7zTLqQCdedC4u5xyc1byl1xcGDSs6Ef//KB4/AJfAf295N6/wYJzd7DZB8AdHuQiLEgAnUgDB8aSrHVjGlzzHZmpZdapVYSOPNBEqxR5ejF1ZQqDpCDV+bSanflUMpR2XIDiv0ayY7LTly9+Xw== jadebustos@euler.jadbp.lab\n"
+groups = ["wheel"]
+
+We can check the available images and the image type:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# composer-cli compose list
+043fc8bf-0c98-4d75-b6f7-07ca2868b8fb FINISHED rhel9edge 0.0.1 edge-commit
+8a987451-c840-45b0-af12-3b3f575b5fd6 FINISHED helloworld 0.0.2 edge-commit
+90387d4d-214f-464b-bb8c-2507165e16c3 FINISHED helloworld 0.0.2 image-installer
+dd3bb1c4-5eff-4f50-8e55-d657284ec0cb FINISHED edgeimage 0.0.3 edge-commit
+[root@rhel9 ~]# 
+
+TIP: You can see in the last column the type of the image. **edge-commit** is a tar image for an Edge deployment and **image-installer** is an ISO installer.
+
+We can also the the image status:
+
+[source,bash,subs="+macros,+attributes"]
+composer-cli compose status
+dd3bb1c4-5eff-4f50-8e55-d657284ec0cb FINISHED Tue Jul 19 00:44:13 2022 edgeimage       0.0.3 edge-commit      2147483648
+8a987451-c840-45b0-af12-3b3f575b5fd6 FINISHED Wed Aug 24 15:53:26 2022 helloworld      0.0.2 edge-commit      2147483648
+90387d4d-214f-464b-bb8c-2507165e16c3 FINISHED Wed Aug 24 15:37:39 2022 helloworld      0.0.2 image-installer  2147483648
+043fc8bf-0c98-4d75-b6f7-07ca2868b8fb FINISHED Thu Jul 7 11:34:25 2022 rhel9edge       0.0.1 edge-commit      2147483648
+[root@rhel9 ~]# 
+

@@ -24,6 +24,8 @@ After the image creation we can download it:
 
 image::edge-deployment/commit-04.png[]
 
+TIP: We can download the image using the command line: xref:04-builder-cmdline.adoc[Using Image Builder from the command line].
+
 As we can see we have two different images for the same template:
 
 1. An ISO image.
