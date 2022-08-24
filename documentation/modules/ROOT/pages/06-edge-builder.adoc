@@ -10,15 +10,39 @@ First of all you will have to deploy a RHEL server installing:
 
 When **Cockpit** and the **Image Builder** service are installed connect to Cockpit and go to Image Builder and create a blueprint for your Edge deployment as indicated in xref:04-builder-blueprints.adoc[Blueprints].
 
-=== Using an ISO image to deploy the image
-
-Once the blueprint has been created we need to create an image for the blueprint, in this case:
-
-image::cockpit/11-create-blueprint.png[]
-
-Once the image build has finished we can download the ISO file:
-
-image::cockpit/14-create-blueprint.png[]
-
 === Deploying a commited image
 
+Once the blueprint has been created we need to create an image for the blueprint, in this case select **RHEL for Edge Commit (.tar)**:
+
+image::edge-deployment/commit-01.png[]
+
+And click on **Create**:
+
+image::edge-deployment/commit-02.png[]
+
+After the image creation we can download it:
+
+image::edge-deployment/commit-04.png[]
+
+As we can see we have two different images for the same template:
+
+1. An ISO image.
+2. The Commit tar image.
+
+TIP: Once we have a blueprint we can create different images for different platforms using the same blueprint.
+
+We need to publish the image using a http server so as explained in xref:01-installation-repositories.adoc[Network repositories] we deploy Apache and we will create a directory to publish the image:..
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# cd /var/www/html
+[root@rhel9 html]# mkdir ostree
+
+We uncompress the image in that directory:
+
+[source,bash,subs="+macros,+attributes"]
+[root@rhel9 html]# tar xf /root/8a987451-c840-45b0-af12-3b3f575b5fd6-commit.tar -C /var/www/html/ostree
+[root@rhel9 html]# ls -lhZ /var/www/html/ostree
+total 4.0K
+-rw-r--r--. 1 root root unconfined_u:object_r:httpd_sys_content_t:s0 553 Aug 24 15:53 compose.json
+drwxr-xr-x. 7 root root unconfined_u:object_r:httpd_sys_content_t:s0 102 Aug 24 15:53 repo
+[root@rhel9 html]# 
