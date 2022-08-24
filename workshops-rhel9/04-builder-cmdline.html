@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Untitled :: RHEL 9 Workshops</title>
-    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/01-installation-repositories.html">
-    <link rel="prev" href="01-installation-kickstart.html">
-    <link rel="next" href="01-installation-using-ks.html">
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/workshops-rhel9/04-builder-cmdline.html">
+    <link rel="prev" href="04-builder-blueprints.html">
+    <link rel="next" href="04-builder-resources.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -61,7 +61,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="01-installation-kickstart.html">1.1 Kickstart files</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="01-installation-repositories.html">1.2 Network repositories</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -115,7 +115,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="04-builder-blueprints.html">4.2 Blueprints</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="04-builder-cmdline.html">4.3 Using image builder from the command line</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -168,43 +168,99 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">RHEL 9 Workshops</a></li>
-    <li><a href="01-installation.html">1. Installation</a></li>
-    <li><a href="01-installation-repositories.html">1.2 Network repositories</a></li>
+    <li><a href="04-builder.html">4. Image Builder</a></li>
+    <li><a href="04-builder-cmdline.html">4.3 Using image builder from the command line</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/01-installation-repositories.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/jadebustos/workshops-rhel9/edit/master/documentation/modules/ROOT/pages/04-builder-cmdline.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
 <div class="sect1">
-<h2 id="repositories"><a class="anchor" href="#repositories"></a>Network repositories</h2>
+<h2 id="buildercmdline"><a class="anchor" href="#buildercmdline"></a>Using image builder from the command line</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>It is quite common to use network repositories when we performed automated installations.</p>
+<p>Image Builder can be used from the command line as well.</p>
 </div>
 <div class="paragraph">
-<p>Although there are several ways to make repositories available through the network we are going to use http/https for that purpose.</p>
-</div>
-<div class="paragraph">
-<p>First we have to install an http server in a machine to make repositories available:</p>
+<p>In the server where you deployed Image Builder:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@httpd ~]# dnf install httpd -y
-...
-[root@httpd ~]# systemctl enable --now httpd</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# composer-cli --help
+commandline tool for osbuild-composer</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>By default the http content will be stored at <strong>/var/www/html</strong> directory so we will create a directory there to store the repositories and a directory named <strong>ks</strong> to store the kickstart files:</p>
+<p>Usage:
+  composer-cli [command]</p>
+</div>
+<div class="paragraph">
+<p>Available Commands:
+  blueprints  Manage blueprints
+  completion  Generate the autocompletion script for the specified shell
+  compose     Manage composes
+  distros     Manage distributions
+  doc         Generate manpage files
+  help        Help about any command
+  modules     Module related commands
+  projects    Project related commands
+  sources     Manage sources
+  status      API server status
+  version     Display the version and exit</p>
+</div>
+<div class="paragraph">
+<p>Flags:
+  -a, --api int         Server API Version to use (default 1)
+  -h, --help            help for composer-cli
+  -j, --json            Output the raw JSON response instead of the normal output
+      --log string      Path to optional logfile
+  -s, --socket string   Path to the server&#8217;s socket file (default "/run/weldr/api.socket")
+      --test int        Pass test mode to compose. 1=Mock compose with fail. 2=Mock compose with finished.
+      --timeout int     Timeout to use for server communication. Set to 0 for no timeout (default 240)</p>
+</div>
+<div class="paragraph">
+<p>Use "composer-cli [command] --help" for more information about a command.
+[root@rhel9 ~]#</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@httpd ~]# mkdir /var/www/html/{repo,ks}</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# composer-cli blueprints list
+helloworld
+[root@rhel9 ~]# composer-cli blueprints show helloworld
+name = "helloworld"
+description = "my first image"
+version = "0.0.2"
+modules = []
+groups = []
+distro = ""
+<a id="packages"></a>
+name = "podman"
+version = "*"
+<a id="packages"></a>
+name = "container-selinux"
+version = "*"
+[customizations]
+<a id="customizations.user"></a>
+name = "operator"
+description = "operator"
+password = "r3dh4t1!"
+key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCvPl4Aof9kRJPDgSKphNV4WAX7kNMcBVwsevuqCJphqmoLHS2onMiZRgcYJV6neKcFzB+kTOKhVzorC8uWNO5K+bTCeF0XkPeDrpCckatYVMtApWhvuqBTwER5x4i2mXAoEfJKNmgZkK3a6/bFdup9nXFi183ZAxaJJPXtkXZRA4dYiRDxKcWdcndDKGM+mFZD6R9en7Up38a4SZsYxCA/MX123ozYurLPniKXL2D4p+pioriCGVLX5BpiCiMrglaHX1XzBUmbHePWDxUoCzKCiD2LVDWZKK3McAXzzOOwMJeTq6GI0wA4FQlpAg9W+aCsCWyiySumS/PFTUGXwbnWI44YJN+H0ywlUWIeP5IsDMGqiYBcXPjdg96tYIY8ueEUbIRf13FLJQlsxCLBNiWwSB08JwJwAD06N3fiWAkJ/weQsNEQeLU7RSJxX0YlmZDr4r+MTnS02A2CcDaA0CfB4M93kJYQX8bk8S+dav7bis8CMsQ7Z+zGXvwrmPOtYRGTKqRPRvgJRj9xVuwuPZvuBkNj7zTLqQCdedC4u5xyc1byl1xcGDSs6Ef//KB4/AJfAf295N6/wYJzd7DZB8AdHuQiLEgAnUgDB8aSrHVjGlzzHZmpZdapVYSOPNBEqxR5ejF1ZQqDpCDV+bSanflUMpR2XIDiv0ayY7LTly9+Xw== <a href="mailto:jadebustos@euler.jadbp.lab">jadebustos@euler.jadbp.lab</a>\n"
+groups = ["wheel"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In the <strong>/var/www/html/repo/</strong> directory create one directory per repository and copy the RPM files.</p>
+<p>We can check the available images and the image type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# composer-cli compose list
+043fc8bf-0c98-4d75-b6f7-07ca2868b8fb FINISHED rhel9edge 0.0.1 edge-commit
+8a987451-c840-45b0-af12-3b3f575b5fd6 FINISHED helloworld 0.0.2 edge-commit
+90387d4d-214f-464b-bb8c-2507165e16c3 FINISHED helloworld 0.0.2 image-installer
+dd3bb1c4-5eff-4f50-8e55-d657284ec0cb FINISHED edgeimage 0.0.3 edge-commit
+[root@rhel9 ~]#</code></pre>
+</div>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -213,58 +269,29 @@
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-You can copy the <strong>BaseOS</strong> and <strong>AppStream</strong> repositories for the RHEL install DVD for instance.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-From a RHEL system you can mirror a repository using the <strong>reposync</strong> command provided by the <strong>dnf-utils</strong> package.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-You can modify or create your own repositories using the <strong>createrepo</strong> command provided by the <strong>createrepo</strong> package.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>To access the repository you can use the URL <strong><a href="http://httpd-server/repo/REPOSITORY-NAME" class="bare">http://httpd-server/repo/REPOSITORY-NAME</a></strong>.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Network repositories can be configured using https as well.
+You can see in the last column the type of the image. <strong>edge-commit</strong> is a tar image for an Edge deployment and <strong>image-installer</strong> is an ISO installer.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>In the <strong>/var/www/html/ks</strong> directory we will include the kickstart file to perform unattended deployments.</p>
+<p>We can also the the image status:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">composer-cli compose status
+dd3bb1c4-5eff-4f50-8e55-d657284ec0cb FINISHED Tue Jul 19 00:44:13 2022 edgeimage       0.0.3 edge-commit      2147483648
+8a987451-c840-45b0-af12-3b3f575b5fd6 FINISHED Wed Aug 24 15:53:26 2022 helloworld      0.0.2 edge-commit      2147483648
+90387d4d-214f-464b-bb8c-2507165e16c3 FINISHED Wed Aug 24 15:37:39 2022 helloworld      0.0.2 image-installer  2147483648
+043fc8bf-0c98-4d75-b6f7-07ca2868b8fb FINISHED Thu Jul 7 11:34:25 2022 rhel9edge       0.0.1 edge-commit      2147483648
+[root@rhel9 ~]#</code></pre>
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="01-installation-kickstart.html">1.1 Kickstart files</a></span>
-  <span class="next"><a href="01-installation-using-ks.html">1.3 Using Kickstart files</a></span>
+  <span class="prev"><a href="04-builder-blueprints.html">4.2 Blueprints</a></span>
+  <span class="next"><a href="04-builder-resources.html">A.1 Image Builder Resources</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
