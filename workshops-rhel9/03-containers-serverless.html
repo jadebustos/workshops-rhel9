@@ -192,7 +192,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# cat &lt;&lt; EOF &gt; /etc/systemd/system/enable-linger.service
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# cat &gt; /etc/systemd/system/enable-linger.service &lt;&lt; EOF
 ### Editing /etc/systemd/system/enable-linger.service.d/override.conf
 ### Anything between here and the comment below will become the new contents of the file
 [Service]
