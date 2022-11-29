@@ -41,7 +41,7 @@ You will need to clone the repository:
 As this is a web application and we will use nginx we will need the nginx configuration file:
 
 [source,bash,subs="+macros,+attributes"]
-[workshop@rhel9 Dockerfiles]$ cat << EOF nginx.conf
+[workshop@rhel9 Dockerfiles]$ cat > nginx.conf << EOF
 worker_processes  1;
 include /usr/share/nginx/modules/*.conf;
 events {
@@ -81,7 +81,7 @@ EOF
 Now we are going to create the image container. We will write the following Dockerfile:
 
 [source,bash,subs="+macros,+attributes"]
-[workshop@rhel9 Dockerfiles]$ cat << EOF Dockerfile.2048.rhel9.v1
+[workshop@rhel9 Dockerfiles]$ cat > Dockerfile.2048.rhel9.v1 << EOF
 # buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v1
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v1
 FROM registry.redhat.io/rhel9/nginx-120
@@ -158,7 +158,7 @@ So as the **core** user we will create the directories where the systemd units w
 Now we will create the systemd unit to download the image from the registry to the server:
 
 [source,bash,subs="+macros,+attributes"]
-[core@rhel9 ~]$ cat << EOF .config/systemd/user/pre-pull-container-image.service
+[core@rhel9 ~]$ cat > .config/systemd/user/pre-pull-container-image.service << EOF
 [Service]
 Type=oneshot
 ExecStart=podman pull quay.io/rhte_2019/2048-demoday:latest
@@ -174,7 +174,7 @@ TIP: Replace the image for your own's one.
 As we are going to expose the application to the world we will need create a systemd socket. We will use the port 8080 to expose the application to the world so we will create the socket:
 
 [source,bash,subs="+macros,+attributes"]
-[core@rhel9 ~]$ cat << EOF .config/systemd/user/container-httpd-proxy.socket 
+[core@rhel9 ~]$ cat > .config/systemd/user/container-httpd-proxy.socket << EOF
 [Socket]
 ListenStream=192.168.1.144:8080
 FreeBind=true
@@ -197,7 +197,7 @@ success
 Now we will create a proxy socket that will start the container and will forward the requests from the 8080 port to the container:
 
 [source,bash,subs="+macros,+attributes"]
-[core@rhel9 ~]$ cat << EOF .config/systemd/user/container-httpd-proxy.service 
+[core@rhel9 ~]$ cat > .config/systemd/user/container-httpd-proxy.service << EOF
 [Unit]
 Requires=container-httpd.service
 After=container-httpd.service
