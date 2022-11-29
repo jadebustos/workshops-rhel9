@@ -233,7 +233,7 @@ EOF
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF nginx.conf
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &gt; nginx.conf &lt;&lt; EOF
 worker_processes  1;
 include /usr/share/nginx/modules/*.conf;
 events {
@@ -276,7 +276,7 @@ EOF
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF Dockerfile.2048.rhel9.v1
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &gt; Dockerfile.2048.rhel9.v1 &lt;&lt; EOF
 # buildah build -f Dockerfile.2048.rhel9.v1 -t 2048-demoday:v1
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v1
 FROM registry.redhat.io/rhel9/nginx-120
@@ -389,7 +389,7 @@ registry.redhat.io/rhel9/nginx-120  latest      8b24fbc725c8  6 weeks ago    379
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/pre-pull-container-image.service
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &gt; .config/systemd/user/pre-pull-container-image.service &lt;&lt; EOF
 [Service]
 Type=oneshot
 ExecStart=podman pull quay.io/rhte_2019/2048-demoday:latest
@@ -418,7 +418,7 @@ Replace the image for your own&#8217;s one.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/container-httpd-proxy.socket
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &gt; .config/systemd/user/container-httpd-proxy.socket &lt;&lt; EOF
 [Socket]
 ListenStream=192.168.1.144:8080
 FreeBind=true
@@ -457,7 +457,7 @@ success
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &lt;&lt; EOF .config/systemd/user/container-httpd-proxy.service
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[core@rhel9 ~]$ cat &gt; .config/systemd/user/container-httpd-proxy.service &lt;&lt; EOF
 [Unit]
 Requires=container-httpd.service
 After=container-httpd.service
