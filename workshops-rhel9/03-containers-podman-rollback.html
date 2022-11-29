@@ -213,7 +213,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF Dockerfile.2048.rhel9.v3
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &gt; Dockerfile.2048.rhel9.v3 &lt;&lt; EOF
 # buildah build -f Dockerfile.2048.rhel9.v3 -t 2048-demoday:v3
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v3
 FROM registry.redhat.io/rhel9/nginx-120
@@ -413,7 +413,7 @@ quay.io/rhte_2019/2048-demoday  latest      618f3cb61744  3 weeks ago        382
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &lt;&lt; EOF Dockerfile.2048.rhel9.v4
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[workshop@rhel9 Dockerfiles]$ cat &gt; Dockerfile.2048.rhel9.v4 &lt;&lt; EOF
 # buildah build -f Dockerfile.2048.rhel9.v4 -t 2048-demoday:v4
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v4
 FROM registry.redhat.io/rhel9/nginx-120
