@@ -10,7 +10,7 @@ When systemd units are used by non-root user are only started when the user star
 As we are going to use the user **core** to run the Serverless container we need to allow this user services run whether core user is logged or not:
 
 [source,bash,subs="+macros,+attributes"]
-[root@rhel9 ~]# cat << EOF > /etc/systemd/system/enable-linger.service
+[root@rhel9 ~]# cat > /etc/systemd/system/enable-linger.service << EOF
 ### Editing /etc/systemd/system/enable-linger.service.d/override.conf
 ### Anything between here and the comment below will become the new contents of the file
 [Service]
