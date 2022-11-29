@@ -22,7 +22,7 @@ image::serverless/podman-autoupdate.png[]
 Using the **core** user create the timer:
 
 [source,bash,subs="+macros,+attributes"]
-[core@rhel9 ~]$ cat << EOF .config/systemd/user/podman-auto-update.timer 
+[core@rhel9 ~]$ cat > .config/systemd/user/podman-auto-update.timer << EOF
 [Unit]
 Description=Podman auto-update timer
 [Timer]
@@ -47,7 +47,7 @@ TIP: You can tune these parameters according your needs.
 Now we will create the unit that will be executed by the above timer:
 
 [source,bash,subs="+macros,+attributes"]
-[core@rhel9 ~]$ cat << EOF .config/systemd/user/podman-auto-update.service
+[core@rhel9 ~]$ cat > .config/systemd/user/podman-auto-update.service << EOF
 [Unit]
 Description=Podman auto-update service
 Documentation=man:podman-auto-update(1)
@@ -117,7 +117,7 @@ WantedBy=default.target
 Create a new Dockerfile as the **workshop** user:
 
 [source,bash,subs="+macros,+attributes"]
-[workshop@rhel9 Dockerfiles]$ cat << EOF Dockerfile.2048.rhel9.v2
+[workshop@rhel9 Dockerfiles]$ cat > Dockerfile.2048.rhel9.v2 << EOF
 # buildah build -f Dockerfile.2048.rhel9.v2 -t 2048-demoday:v2
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v2
 FROM registry.redhat.io/rhel9/nginx-120

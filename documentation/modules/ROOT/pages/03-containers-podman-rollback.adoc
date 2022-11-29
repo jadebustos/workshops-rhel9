@@ -19,7 +19,7 @@ image::serverless/podman-autoupdate-rollback.png[]
 We will create a faulty image. So create a new Dockerfile as the **workshop** user:
 
 [source,bash,subs="+macros,+attributes"]
-[workshop@rhel9 Dockerfiles]$ cat << EOF Dockerfile.2048.rhel9.v3
+[workshop@rhel9 Dockerfiles]$ cat > Dockerfile.2048.rhel9.v3 << EOF
 # buildah build -f Dockerfile.2048.rhel9.v3 -t 2048-demoday:v3
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v3
 FROM registry.redhat.io/rhel9/nginx-120
@@ -161,7 +161,7 @@ As we can see the faulty images was downloaded as it is a faulty one a rollback 
 Now we are going to build a new container image to perform the update simulating fixing the v3 container image:
 
 [source,bash,subs="+macros,+attributes"]
-[workshop@rhel9 Dockerfiles]$ cat << EOF Dockerfile.2048.rhel9.v4
+[workshop@rhel9 Dockerfiles]$ cat > Dockerfile.2048.rhel9.v4 << EOF
 # buildah build -f Dockerfile.2048.rhel9.v4 -t 2048-demoday:v4
 # podman run --rm -d -p 8080:8081 localhost/2048-demoday:v4
 FROM registry.redhat.io/rhel9/nginx-120
