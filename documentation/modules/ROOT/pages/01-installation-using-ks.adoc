@@ -59,6 +59,7 @@ So at least we need 3 times free space for the RHEL 9 Install DVD.
 We have mount the RHEL 9 Installation DVD and copy all the contents to a temporary directory:
 
 [source,bash,subs="+macros,+attributes"]
+[root@rhel9 ~]# mkdir /media/isos
 [root@rhel9 ~]# mount -t iso9660 /root/rhel-baseos-9.0-x86_64-dvd.iso /media/isos -o loop
 [root@rhel9 ~]# mkdir /tmp/customiso
 [root@rhel9 ~]# cp -prf /media/isos/* /tmp/customiso
