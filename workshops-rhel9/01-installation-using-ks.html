@@ -328,7 +328,8 @@ Replace the kickstart URL for your kickstart file URL.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# mount -t iso9660 /root/rhel-baseos-9.0-x86_64-dvd.iso /media/isos -o loop
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@rhel9 ~]# mkdir /media/isos
+[root@rhel9 ~]# mount -t iso9660 /root/rhel-baseos-9.0-x86_64-dvd.iso /media/isos -o loop
 [root@rhel9 ~]# mkdir /tmp/customiso
 [root@rhel9 ~]# cp -prf /media/isos/* /tmp/customiso
 [root@rhel9 ~]#</code></pre>
