@@ -45,6 +45,7 @@ This is a new version designed for Edge computing cases which is based in an inm
 ** xref:03-containers-podman-autoupdate.adoc#podmanautoupdate[Podman auto-update]
 ** xref:03-containers-podman-rollback.adoc#podmanrollback[Performing automatic rollbacks]
 ** xref:03-containers-resources.adoc#containerresources[Container Resources]
+
 .xref:04-builder.adoc[Image Builder]
 * xref:04-builder.adoc#imagebuilder
 ** xref:04-builder-installing.adoc#installingbuilder[Installing Image Builder]
