@@ -28,7 +28,6 @@ This is a new version designed for Edge computing cases which is based in an inm
 
 [.tile]
 .xref:00-README.adoc[README]
-.xref:01-installation.adoc[Installation]
 * xref:01-installation.adoc#installingrhel[Installing Red Hat Enterprise Linux 9 (RHEL 9)]
 ** xref:01-installation-kickstart.adoc#kickstart[Kickstart files]
 ** xref:01-installation-repositories.adoc#repositories[Network repositories]
