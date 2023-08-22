@@ -27,34 +27,33 @@ This is a new version designed for Edge computing cases which is based in an inm
 == Browse modules
 
 [.tile]
-.xref:00-README.adoc[README]
 * xref:01-installation.adoc#installingrhel[Installing Red Hat Enterprise Linux 9 (RHEL 9)]
 ** xref:01-installation-kickstart.adoc#kickstart[Kickstart files]
 ** xref:01-installation-repositories.adoc#repositories[Network repositories]
 ** xref:01-installation-using-ks.adoc#usingkickstartfiles[Using Kickstart files]
 ** xref:01-installation-resources.adoc#rhelinstallationresources[RHEL 9 Installation Resources]
-.xref:02-management.adoc[RHEL Managament]
+
 * xref:02-management.adoc#rhelmanagement[RHEL Management with Cockpit]
 ** xref:02-management-install.adoc#installingcockpit[Installing Cockpit]
 ** xref:02-management-resources.adoc#cockpitresources[Cockpit Resources]
-.xref:03-containers.adoc[Containers]
+
 * xref:03-containers.adoc#deployingcontainers[Deploying containers]
 ** xref:03-containers-rpms.adoc#containerrpms[Installing container tools]
 ** xref:03-containers-serverless.adoc#serverless[Deploying Serverless Containers]
 ** xref:03-containers-podman-autoupdate.adoc#podmanautoupdate[Podman auto-update]
 ** xref:03-containers-podman-rollback.adoc#podmanrollback[Performing automatic rollbacks]
 ** xref:03-containers-resources.adoc#containerresources[Container Resources]
-.xref:04-builder.adoc[Image Builder]
+
 * xref:04-builder.adoc#imagebuilder[Create RHEL images to deploy everywhere]
 ** xref:04-builder-installing.adoc#installingbuilder[Installing Image Builder]
 ** xref:04-builder-blueprints.adoc#blueprints[Blueprints]
 ** xref:04-builder-cmdline.adoc[Using Image Builder from the command line]
 ** xref:04-builder-resources.adoc#builderresources[Image Builder Resources]
-.xref:05-security.adoc[Security]
+
 * xref:05-security.adoc#security[Security on RHEL]
 ** xref:05-security-session-recording.adoc#sessionrecording[Session Recording]
 ** xref:05-security-resources.adoc#securityresources[Security Resources]
-.xref:06-edge.adoc[Edge Computing with RHEL]
+
 * xref:06-edge.adoc#edge[RHEL in the Edge]
 ** xref:06-edge-deployment.adoc#edgedeployment[Deployment for RHEL in the Edge]
 ** xref:06-edge-builder.adoc#edgebuilder[Deployment for RHEL in the Edge using Image Builder]
