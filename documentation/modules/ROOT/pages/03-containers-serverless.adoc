@@ -20,6 +20,8 @@ ExecStart=loginctl enable-linger core
 WantedBy=multi-user.target default.target
 ### Lines below this comment will be discarded
 EOF
+[root@rhel9 ~]# systemd daemon-reload
+[root@rhel9 ~]# systemd enable enable-linger.service
 [root@rhel9 ~]#
 
 === Building the containerized application
